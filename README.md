@@ -77,9 +77,25 @@ tools/              Build: composes content into each app; the kid build
 
 ## Build & deploy
 
-- Vanilla JS + a small Node build step (no framework).
-- Two Vercel projects, each with its Root Directory set to its app folder, both
-  push-to-deploy from this one repo.
+Push to `main` and both sites deploy automatically (Vercel Git integration).
+
+- **Two Vercel projects, one repo.** `beyondparentalcontrols` (→ apps/parent)
+  and `yourinternetroadmap` (→ apps/kid) are both connected to this GitHub repo.
+- **One build, two outputs.** Each project builds from the **repo root** with
+  `node tools/build.mjs` (which composes `content/` into every app's `lib/`) and
+  serves a different **Output Directory** — `apps/parent` vs `apps/kid`. Building
+  from the repo root keeps the shared `content/` + `tools/` in scope, so no
+  "include files outside root directory" flag is needed. (These three settings —
+  build command, output directory, framework=Other — live in each project's
+  Vercel settings, since Output Directory differs per project.)
+- `lib/` stays git-ignored — Vercel regenerates it every build, so the build's
+  safety assertion (kid bundle carries no parent-only content) runs on every deploy.
+- Local: `npm run build`, then serve the repo and open `apps/<app>/`.
+
+> **Why not Turborepo?** Turborepo earns its keep once you have several apps that
+> share real packages and benefit from build caching + affected-only task runs.
+> Here the "build" is one sub-second script over content-as-data, so a plain repo
+> with the Vercel monorepo settings above is the right amount of structure.
 
 ## Privacy
 
