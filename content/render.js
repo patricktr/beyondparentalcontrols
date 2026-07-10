@@ -1,9 +1,9 @@
 // Audience-agnostic composer + the helper bundle every section receives.
-// Contains NO prose, so it's safe in either build. Give it a `sections` map
-// (kid's or parent's) and it walks SECTION_ORDER, rendering whatever that
-// audience provides.
+// Contains NO prose, so it's safe in either build. Each audience's sections
+// module default-exports an ORDERED ARRAY of { when?, body } — the two docs
+// have different section sequences, so order lives with the sections, not here.
 
-import { STAGES, SECTION_ORDER, PLATFORMS, APPROACH } from './spine.js';
+import { STAGES, PLATFORMS, APPROACH } from './spine.js';
 
 export const esc = (s) =>
   String(s).replace(/[&<>"']/g, (c) =>
@@ -17,22 +17,18 @@ const PRONOUNS = {
   other: { subj: 'they', obj: 'them', pos: 'their', posp: 'theirs', refl: 'themselves' },
 };
 
-// Apply the approach shift and figure out which stage the child is in now.
-function pacedStages(cfg) {
-  const { shift } = APPROACH[cfg.approach];
-  const stages = STAGES.map((s) => ({
-    ...s,
-    age: s.terminal ? 18 : Math.max(5, Math.min(17, s.baseAge + shift)),
-  }));
-  let current = 0;
-  stages.forEach((s, i) => { if (cfg.age >= s.age) current = i; });
-  return stages.map((s, i) => ({ ...s, isCurrent: i === current, isNext: i === current + 1 }));
+// Fixed grade→age schedule; "you are here" = the latest grade the child's age
+// has reached. Before Grade 4 → nothing current (Grade 4 is up next).
+function stagesFor(cfg) {
+  let current = -1;
+  STAGES.forEach((s, i) => { if (cfg.age >= s.age) current = i; });
+  return STAGES.map((s, i) => ({ ...s, isCurrent: i === current, isNext: i === current + 1 }));
 }
 
 export function helpers(cfg) {
-  const stages = pacedStages(cfg);
+  const stages = stagesFor(cfg);
   const pr = PRONOUNS[cfg.gender];
-  const plural = cfg.gender === 'other'; // "they" takes plural verb forms
+  const plural = cfg.gender === 'other';
   const name = cfg.child ? esc(cfg.child) : ''; // pre-escaped: the only untrusted string
 
   return {
@@ -40,12 +36,12 @@ export function helpers(cfg) {
     esc,
     name,
     hasName: Boolean(name),
-    kid: name || 'your kid', // parent-side fallback when no name given
+    kid: name || 'your kid', // parent-side fallback
 
     // pronouns + conjugation (so "they wants" never happens)
     they: pr.subj, them: pr.obj, their: pr.pos, theirs: pr.posp, themself: pr.refl,
     be: plural ? 'are' : 'is',
-    beC: plural ? '’re' : '’s', // be-contraction: "he’s at" / "they’re at"
+    beC: plural ? '’re' : '’s',   // be-contraction: "he’s at" / "they’re at"
     have: plural ? 'have' : 'has',
     haveC: plural ? '’ve' : '’s', // have-contraction: "he’s done" / "they’ve done"
     s: (verb) => (plural ? verb : verb + 's'), // "want" → "wants"
@@ -53,18 +49,18 @@ export function helpers(cfg) {
 
     platform: PLATFORMS[cfg.platform],
     approach: APPROACH[cfg.approach],
-    showGrade: cfg.approach === 'balanced', // grades only line up at the default pace
+    schoolDevice: cfg.schoolDevice,
     stages,
-    current: stages.find((x) => x.isCurrent),
+    current: stages.find((x) => x.isCurrent), // undefined if age < Grade 4
+    beforeStart: cfg.age < STAGES[0].age,
   };
 }
 
-// sections: { [id]: { when?(cfg): boolean, body(helpers): htmlString } }
+// sections: ordered array of { when?(cfg): boolean, body(helpers): htmlString }
 export function render(cfg, sections) {
   const h = helpers(cfg);
-  return SECTION_ORDER
-    .map((id) => sections[id])
-    .filter((sec) => sec && (!sec.when || sec.when(cfg)))
+  return sections
+    .filter((sec) => !sec.when || sec.when(cfg))
     .map((sec) => sec.body(h).trim())
     .join('\n\n');
 }
