@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>Your plan · Beyond Parental Controls</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+  <p class="topbar"><a href="index.html">← adjust choices</a></p>
+  <main id="doc">Loading…</main>
+
+  <aside id="share">
+    <h2>Send this to your kid</h2>
+    <p>A safe, kid-facing version of this plan — nothing candid. This is the link to give them.</p>
+    <div class="share-row">
+      <input id="kidlink" readonly aria-label="Kid link">
+      <button id="copy" type="button">Copy</button>
+    </div>
+  </aside>
+</div>
+
+<script type="module">
+  import { parseConfig } from './lib/config.js';
+  import { render } from './lib/render.js';
+  import sections from './lib/sections.js';
+
+  const params = new URLSearchParams(location.search);
+  const cfg = parseConfig(params);
+  document.getElementById('doc').innerHTML = render(cfg, sections);
+  document.title = cfg.child
+    ? `${cfg.child}'s plan · Beyond Parental Controls`
+    : 'Your plan · Beyond Parental Controls';
+
+  // Build the kid link from the normalized config (non-sensitive fields only),
+  // pointed at the separate kid site.
+  const KID_ORIGIN = 'https://yourinternetroadmap.com/';
+  const kid = new URLSearchParams();
+  if (cfg.child) kid.set('child', cfg.child);
+  kid.set('age', cfg.age);
+  kid.set('for', cfg.gender);
+  kid.set('platform', cfg.platform);
+  kid.set('approach', cfg.approach);
+  const kidUrl = `${KID_ORIGIN}?${kid.toString()}`;
+
+  const link = document.getElementById('kidlink');
+  link.value = kidUrl;
+  const btn = document.getElementById('copy');
+  btn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(kidUrl);
+      btn.textContent = 'Copied ✓';
+      setTimeout(() => (btn.textContent = 'Copy'), 1500);
+    } catch {
+      link.select();
+    }
+  });
+</script>
+</body>
+</html>

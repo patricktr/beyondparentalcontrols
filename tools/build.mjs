@@ -1,14 +1,38 @@
 #!/usr/bin/env node
-// Build step: compose content/ into each app.
+// Compose content/ into each app's lib/ (git-ignored, regenerated each build).
 //
-// Contract (to be implemented in milestone 1):
-//   - Read the content spine + fragments from ../content.
-//   - For apps/parent: include sections with audience in {both, parent}.
-//   - For apps/kid:    include sections with audience in {both, kid} ONLY.
-//     The candid (audience: 'parent') fragments must never be written into
-//     apps/kid — that exclusion IS the safety boundary.
+//   node tools/build.mjs
 //
-// Rendering itself happens client-side from URL params; this step assembles
-// the content module each app ships.
+// The kid app receives the shared modules + kid/sections.js ONLY. The parent
+// app additionally gets parent/sections.js. A post-build assertion guarantees
+// no parent-only content reached the kid bundle — that exclusion is the safety
+// boundary, and it's enforced here on every build/deploy.
 
-console.log('build: not implemented yet (scaffold). See tools/build.mjs contract.');
+import { cpSync, mkdirSync, rmSync, readdirSync, readFileSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const SHARED = ['config.js', 'spine.js', 'render.js'];
+const SENTINEL = 'PARENT-ONLY-SENTINEL';
+
+function buildApp(app, sectionsRelPath) {
+  const lib = join(root, 'apps', app, 'lib');
+  rmSync(lib, { recursive: true, force: true });
+  mkdirSync(lib, { recursive: true });
+  for (const f of SHARED) cpSync(join(root, 'content', f), join(lib, f));
+  cpSync(join(root, 'content', sectionsRelPath), join(lib, 'sections.js'));
+  return lib;
+}
+
+buildApp('parent', 'parent/sections.js');
+const kidLib = buildApp('kid', 'kid/sections.js');
+
+// Safety assertion: the kid bundle must not contain parent-only content.
+for (const f of readdirSync(kidLib)) {
+  if (readFileSync(join(kidLib, f), 'utf8').includes(SENTINEL)) {
+    throw new Error(`SAFETY VIOLATION: parent-only content reached apps/kid/lib/${f}`);
+  }
+}
+
+console.log('build ok — apps/parent/lib + apps/kid/lib (kid verified free of parent-only content)');

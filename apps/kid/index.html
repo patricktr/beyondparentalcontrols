@@ -5,26 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow, noarchive">
 <title>Your Internet Roadmap</title>
-<style>
-  :root { color-scheme: light dark; --bg:#f5faf6; --text:#22302a; --muted:#5c6b62; --accent:#1f8a4c; }
-  @media (prefers-color-scheme: dark){ :root{ --bg:#141815; --text:#dce6df; --muted:#93a29a; --accent:#5fd18b; } }
-  * { box-sizing: border-box; }
-  body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px;
-    background:var(--bg); color:var(--text);
-    font:17.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    -webkit-font-smoothing:antialiased; }
-  main { max-width:560px; text-align:center; }
-  h1 { font-size:2rem; letter-spacing:-.02em; margin:0 0 .4em; }
-  p { color:var(--muted); margin:.4em 0; }
-  .tag { display:inline-block; margin-top:1.4em; padding:5px 12px; border:1px solid var(--accent);
-    border-radius:999px; color:var(--accent); font-size:.82rem; font-weight:600; }
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main>
-    <h1>Your Internet Roadmap</h1>
-    <p>How you earn more freedom online — one year at a time.</p>
-    <span class="tag">🚧 Coming soon</span>
-  </main>
+<main id="doc" class="page">Loading your roadmap…</main>
+<script type="module">
+  import { parseConfig } from './lib/config.js';
+  import { render } from './lib/render.js';
+  import sections from './lib/sections.js';
+
+  const cfg = parseConfig(new URLSearchParams(location.search));
+  document.getElementById('doc').innerHTML = render(cfg, sections);
+  if (cfg.child) document.title = `${cfg.child}'s Internet Roadmap`;
+</script>
 </body>
 </html>
