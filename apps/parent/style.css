@@ -73,3 +73,34 @@ button:hover { filter: brightness(1.07); }
   background: var(--card); border: 1px solid var(--border); border-radius: 9px;
 }
 .share-row button { white-space: nowrap; }
+
+/* document content (the plan) */
+h3 { font-size: 1.12rem; margin: 1.6em 0 0.4em; color: var(--accent); }
+blockquote {
+  margin: 1em 0; padding: 12px 20px; background: var(--accent-soft);
+  border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; font-style: italic;
+}
+#doc ul, #doc ol { padding-left: 1.4em; }
+#doc li { margin: 0.35em 0; }
+ol.findings > li { margin: 0.9em 0; }
+td ul { margin: 0; padding-left: 1.1em; }
+.note {
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  border: 1px solid var(--border); border-left: 3px solid var(--accent);
+  border-radius: 0 8px 8px 0; padding: 4px 16px; font-size: 0.95rem; margin: 1.1em 0;
+}
+.emergency {
+  background: #fdf1ef; border: 1px solid #b3402f; border-left: 5px solid #b3402f;
+  border-radius: 8px; padding: 6px 22px; margin: 1.8em 0;
+}
+@media (prefers-color-scheme: dark) { .emergency { background: #2b1e1c; border-color: #e06a58; } }
+.year { border: 1px solid var(--border); border-radius: 12px; background: var(--card); padding: 2px 20px 16px; margin: 16px 0; }
+.year.now { border-color: var(--accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent); }
+.here {
+  font-size: 0.68rem; font-weight: 700; color: #fff; background: var(--accent);
+  padding: 2px 8px; border-radius: 999px; vertical-align: middle;
+  text-transform: uppercase; letter-spacing: 0.03em; margin-left: 6px;
+}
+.sources { margin-top: 2.6em; font-size: 0.86rem; color: var(--muted); }
+.sources h2 { font-size: 1.15rem; }
+.sources p { margin: 0.6em 0; }
