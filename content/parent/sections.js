@@ -139,6 +139,30 @@ const GRADES = {
 
 const list = (items) => `<ul>${items.map((i) => `<li>${i}</li>`).join('')}</ul>`;
 
+// Layer 2 device-setup steps, per platform. Sourced from each vendor's current
+// (2025–26) parental-control tooling — no fabrication; unknown platforms would
+// fall back to an empty layer.
+const DEVICE_LAYER = {
+  apple: [
+    'Configure <strong>Screen Time</strong> from Family Sharing, then verify from the kid’s device. Web Content → Allowed Websites Only for grade 4; “Limit Adult Websites” from grade 5–6.',
+    '<strong>Communication Limits</strong> (approved contacts) + <strong>Communication Safety</strong> on (on-device nude-image blurring; can’t be disabled under 13).',
+    '<strong>Ask to Buy</strong> + <strong>Don’t Allow Deleting Apps</strong> + App Store cap at the kid’s age tier. Lock the known bypasses (time-zone trick, Siri web search, YouTube link previews).',
+    '<strong>Reliability warning:</strong> Screen Time has a long history of silently failing — treat it as <em>policy signal, not enforcement</em>; the network layer is your backstop.',
+  ],
+  google: [
+    'Install the <strong>Family Link</strong> app (yours) and sign a <strong>supervised child Google Account</strong> (true birthdate) into the device. Full supervision works on <strong>Android 6+ and Chromebooks (Chrome OS 71+)</strong> only — not iPhones/iPads or Windows/Mac.',
+    '<strong>Require approval for every app install</strong> (Play downloads and purchases); set daily <em>and</em> per-app time limits, <strong>Downtime/bedtime</strong>, and a <strong>School Time</strong> schedule.',
+    'Enforce <strong>SafeSearch</strong> and manage <strong>Chrome site filtering</strong> — “only approved sites” (allowlist) for grade 4, then block mature/specific sites from grade 5–6 — plus the <strong>YouTube supervised experience</strong> (Explore → Explore More → Most of YouTube) and <strong>approved contacts</strong> for calls/texts.',
+    '<strong>Removal reality:</strong> under 13 the child can’t leave supervision; at 13 the account is offered the choice; 13–17 need your approval (a parent access code) to switch it off. A VPN can still slip local filters, so lock app installs and remove VPN apps — the network layer is your backstop.',
+  ],
+  amazon: [
+    'Fire tablets run <strong>Fire OS</strong> (a fork of Android) with the <strong>Amazon Appstore</strong> — <strong>Google Family Link and Google Play don’t apply</strong>. The native tool is <strong>Amazon Kids</strong>, free and built in.',
+    'Create a <strong>child profile</strong> (Settings → Profiles &amp; Family Library, or the <strong>Parent Dashboard</strong> at parents.amazon.com) with a true birthdate — the child gets the walled Amazon Kids experience, not the adult tablet.',
+    '<strong>Web browsing</strong> has three modes: <strong>off</strong>, <strong>“Hand-Selected Websites &amp; Videos”</strong> (an Amazon-curated allowlist — the grade-4 setting), or <strong>“Filtered Websites &amp; Videos”</strong> (broader but filtered, with the option to block specific sites — grade 5–6).',
+    'Set <strong>daily time limits</strong> per day, a <strong>bedtime</strong>, per-activity limits (apps/reading/videos), and <strong>Learn First</strong> goals (educational activity before entertainment); PIN-protect purchases. <strong>Amazon Kids+</strong> (optional) adds curated, no-in-app-purchase content, and is Fire-only as of 2025.',
+  ],
+};
+
 const gradeBlock = (h, s) => {
   const g = GRADES[s.id];
   const here = s.isCurrent ? ' <span class="here">you are here</span>' : '';
@@ -257,31 +281,19 @@ export default [
       <h2>The stack — set up once, before school starts</h2>
       <p>No single layer survives a motivated 13-year-old, so you run several thin layers and let the
         redundancy work. Estimated setup: one weekend.</p>
-      ${h.cfg.platform !== 'apple' ? `<p class="note"><strong>Platform note:</strong> the device layer
-        below is written for an Apple household (Screen Time). The <em>principle</em> — identity →
-        network filter → device controls → bedtime cutoff — applies to ${h.platform.name}
-        (${h.platform.tool}) too, but the device-specific steps need that platform’s own tooling, which
-        isn’t sourced here yet.</p>` : ''}
       <h3>Layer 0 — Identity (do this first)</h3>
       ${list([
-        `A child account for each kid in family sharing, with <strong>true birthdates</strong> — the App Store age tiers and platform age-assurance systems all key off it.`,
+        `A supervised <strong>child account</strong> for each kid with a <strong>true birthdate</strong> (${h.platform.account}) — the store’s age tiers and platform age-assurance systems key off it.`,
         'One family email (yours) as the recovery address on every kid account. You hold all passwords until the handoff years.',
       ])}
       <h3>Layer 1 — Network (the layer everything obeys)</h3>
       ${list([
         '<strong>A filtering DNS resolver</strong> (e.g. NextDNS, ~$20/yr) — one profile per kid. Block porn + bypass methods (VPNs/proxies/DoH), enforce SafeSearch and YouTube Restricted Mode, enable logging so <em>you</em> can see what’s blocked (transparently). Installs via a device profile so it follows the device onto cellular and friends’ Wi-Fi.',
         '<strong>Router:</strong> point DHCP at your filtered DNS, and <strong>schedule a hard internet cutoff at bedtime</strong> — the single most evidence-backed control in this plan.',
-        'Close the bypass holes now (they don’t matter at 9, they will at 13): block iCloud Private Relay endpoints and known DoH servers; redirect outbound DNS to your resolver.',
+        'Close the bypass holes now (they don’t matter at 9, they will at 13): block known VPN, proxy, and DoH endpoints (plus iCloud Private Relay on Apple); redirect outbound DNS to your resolver.',
       ])}
       <h3>Layer 2 — ${h.platform.name} devices</h3>
-      ${h.cfg.platform === 'apple'
-        ? list([
-            'Configure <strong>Screen Time</strong> from Family Sharing, then verify from the kid’s device. Web Content → Allowed Websites Only for grade 4; “Limit Adult Websites” from grade 5–6.',
-            '<strong>Communication Limits</strong> (approved contacts) + <strong>Communication Safety</strong> on (on-device nude-image blurring; can’t be disabled under 13).',
-            '<strong>Ask to Buy</strong> + <strong>Don’t Allow Deleting Apps</strong> + App Store cap at the kid’s age tier. Lock the known bypasses (time-zone trick, Siri web search, YouTube link previews).',
-            '<strong>Reliability warning:</strong> Screen Time has a long history of silently failing — treat it as <em>policy signal, not enforcement</em>; the network layer is your backstop.',
-          ])
-        : `<p class="stub">[ ${h.platform.tool} device-setup steps need sourcing before they ship — placeholder, not fabricated guidance. ]</p>`}
+      ${list(DEVICE_LAYER[h.cfg.platform])}
       ${h.schoolDevice ? `
       <h3>The school-issued device (the machine you don’t control)</h3>
       <p>A district-enrolled device obeys district policy, not you — parental tools can’t touch it, and
@@ -301,9 +313,11 @@ export default [
         '<strong>Consoles/Spotify:</strong> family apps for play limits, ratings, purchase approval, and explicit-content filters the kid can’t flip back.',
       ])}
       <h3>Layer 5 — Monitoring (the honest version)</h3>
-      <p>Optional, and only worth it transparent. On iOS, third-party apps <strong>cannot read
-        message/app content</strong> (no visibility into Snap/TikTok/Discord). Reasonable default:
-        <strong>skip the monitoring apps; use DNS logs + platform-native family tools + weekly
+      <p>Optional, and only worth it transparent. On <strong>Apple</strong>, third-party apps can’t read
+        message/app content (no visibility into Snap/TikTok/Discord); on <strong>Android</strong> a
+        VPN-based monitor filters but rarely reads app content either; on <strong>Amazon</strong>, the
+        Parent Dashboard already surfaces activity and browsing history. Reasonable default everywhere:
+        <strong>skip the monitoring apps; use your DNS logs + platform-native family tools + weekly
         sit-downs.</strong> If you do use alerting in middle school, disclose it and sunset it by ~15–16.</p>`,
   },
 
@@ -394,7 +408,7 @@ export default [
           alerts · NCRI “Digital Pandemic” 2024 · Thorn (<em>Online Grooming</em> 2022, <em>Deepfake
           Nudes</em> 2025, disclosure data) · DCU <em>Recommending Toxicity</em> 2024 · UCL/Kent
           <em>Safer Scrolling</em> 2024 · FBI 764 alert 2025 · Common Sense/NORC AI companions 2025.</p>
-        <p><strong>Tooling (2025–26 primary docs):</strong> Apple Newsroom · Google Family Link docs ·
+        <p><strong>Tooling (2025–26 primary docs):</strong> Apple Newsroom · Google Family Link docs + Feb 2025 update · Amazon Kids / Parent Dashboard (parents.amazon.com) ·
           Zscaler ChromeOS/ZIA + NYC DOE case study · NextDNS/ControlD/CleanBrowsing · Meta Teen
           Accounts · TikTok Family Pairing · SCOTUS <em>Free Speech Coalition v. Paxton</em> 2025 · FTC
           COPPA 2025 · TAKE IT DOWN Act 2025.</p>

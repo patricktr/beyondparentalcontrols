@@ -17,7 +17,7 @@ export const STAGES = [
 export const PLATFORMS = {
   apple:  { name: 'Apple',       tool: 'Screen Time',  account: 'a child Apple Account in Family Sharing' },
   google: { name: 'Google',      tool: 'Family Link',  account: 'a supervised Google Account' },
-  amazon: { name: 'Amazon Fire', tool: 'Amazon Kids',  account: 'an Amazon Kids+ child profile' },
+  amazon: { name: 'Amazon Fire', tool: 'Amazon Kids',  account: 'an Amazon child profile' },
 };
 
 // Approach changes the PACE and TONE, never the destination. The grade
