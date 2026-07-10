@@ -28,7 +28,7 @@ the kid link.
    `…/plan?child=Milo&age=9&for=boy&platform=apple&approach=balanced`.
 3. **Personalized links are free** — the link *is* the config. (No token store;
    if URLs ever feel long we can bit-pack a self-decoding token, still no DB.)
-4. **Safety boundary is a separate deployment, not just a gate.** Because pages
+4. **Safety boundary is a separate deployment, not a gate.** Because pages
    render client-side, candid text would otherwise ship to the kid's browser.
    The kid site is its own deployment that *does not contain* the candid
    fragments — so no URL-tampering can reveal what isn't there. See
@@ -47,18 +47,21 @@ the kid link.
 
 ## Safety model
 
-Three layers keep a kid who holds the kid link away from candid content:
+The boundary is **what the kid's device receives** — not secrecy. Two
+load-bearing layers:
 
 1. **Separate deployment.** `yourinternetroadmap.com` is built from kid-safe
-   fragments only; the candid fragments are never in its bundle.
+   fragments only; the candid fragments are never in its bundle, so no
+   URL-tampering can reveal what isn't there.
 2. **No back-link.** The kid page links nowhere near the parent side. The only
    cross-link is parent→kid ("send this to your kid").
-3. **Light gate (defense-in-depth).** The parent `/plan` view keeps a shared
-   password gate, so a kid who finds the parent domain can't just fill the form
-   and read it.
 
-> **Note:** this repo is public, so the candid content is readable in *source*
-> for anyone browsing GitHub. The gate protects the rendered site, not the repo.
+We deliberately **do not** gate or hide the parent content — the parent site
+and this repo are both public. The goal was never to keep this material secret
+from every kid on the internet (one with open browsing can already reach far
+worse); it's to guarantee it is never *delivered to your kid* via the link you
+send. A password gate would add friction for every parent without strengthening
+that guarantee, since the separation above — not a gate — is what does the work.
 
 ## Repo structure
 
@@ -66,7 +69,7 @@ Three layers keep a kid who holds the kid link away from candid content:
 content/            Single source of truth: the spine + fragments + schema.
                     Each section is tagged audience: both | parent | kid.
 apps/
-  parent/           → beyondparentalcontrols.com  (landing + configurator + /plan, gated)
+  parent/           → beyondparentalcontrols.com  (landing + configurator + /plan)
   kid/              → yourinternetroadmap.com      (roadmap only)
 tools/              Build: composes content into each app; the kid build
                     EXCLUDES every parent-only (candid) fragment.
