@@ -105,8 +105,11 @@ Push to `main` and both sites deploy automatically (Vercel Git integration).
 
 ## Privacy
 
-No tracking, no analytics, no database, `noindex`. Everything renders in the
-browser. Matches the original project's family-privacy stance.
+No accounts, no database, no cookies, `noindex`; everything renders in the browser and the config you
+enter never leaves your device. The **parent** site keeps only lightweight, anonymous analytics
+(pageviews, browser, coarse geo via PostHog) — the URL query string is stripped so names and choices are
+never sent, autocapture is off, persistence is cookieless, and IP is discarded server-side. The **kid**
+site is untracked. Matches the original project's family-privacy stance.
 
 ## Status
 
