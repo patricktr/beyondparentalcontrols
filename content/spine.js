@@ -20,11 +20,14 @@ export const PLATFORMS = {
   amazon: { name: 'Amazon Fire', tool: 'Amazon Kids',  account: 'an Amazon child profile' },
 };
 
-// Approach changes the PACE and TONE, never the destination. The grade
-// schedule is fixed (gates are readiness-based); approach sets how hard you
-// hold each gate. Every path still ends at full autonomy by 18.
+// Approach changes the PACE, never the destination. `shift` moves where the kid
+// sits on the one fixed grade schedule: cautious holds each unlock ~a year longer
+// (+1), open runs ~a year earlier (−1), balanced is the reference (0). The grades,
+// unlocks and gates are identical across paces — only the "you are here" position
+// moves. Every path still ends at full autonomy by 18 (cautious reaches the final
+// handoff right at 18; open around 16).
 export const APPROACH = {
-  cautious: { label: 'Cautious', tone: 'You hold each new step a little longer, leaning on the locks while the skills catch up.' },
-  balanced: { label: 'Balanced', tone: 'The default schedule below — access expands about one notch a year.' },
-  open:     { label: 'Open',     tone: 'You move at the pace of demonstrated readiness, leaning on trust and conversation over locks.' },
+  cautious: { label: 'Cautious', shift: 1,  tone: 'You hold each step about a year longer than the grade label, leaning on the locks while the skills catch up.' },
+  balanced: { label: 'Balanced', shift: 0,  tone: 'The grade labels below are the schedule — access expands about one notch a year.' },
+  open:     { label: 'Open',     shift: -1, tone: 'You run about a year ahead of the labels, at the pace of demonstrated readiness — trust and conversation over locks.' },
 };

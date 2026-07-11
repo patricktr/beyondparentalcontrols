@@ -12,7 +12,7 @@ gets a warm, safe, forward-facing version of the same roadmap.
 
 | Site | Domain | Audience | Contents |
 |------|--------|----------|----------|
-| **Parent** | `beyondparentalcontrols.com` | Grown-ups | Big-picture landing + configurator + the candid parent plan |
+| **Parent** | `beyondparentalcontrols.com` | Grown-ups | Big-picture landing + configurator + the candid parent plan + a sourced *research* page |
 | **Kid** | `yourinternetroadmap.com` | Kids | Only the kid-facing roadmap — nothing candid |
 
 The parent configures once, reads the parent plan, and sends the kid **only**
@@ -39,11 +39,12 @@ the kid link.
 | Param | Values | Effect |
 |-------|--------|--------|
 | `age` | number / grade | Sets the "you are here" marker and the next unlock |
-| `platform` | `apple` · `google` · (`amazon` later) | Swaps the setup instructions (Screen Time / Family Link / Amazon Kids) |
-| `approach` | `cautious` · `balanced` · `open` | **Pace, not destination** — shifts each milestone ±1–2 yrs and the default tone. Every version still ends at full autonomy by 18. |
-| `for` | `boy` · `girl` · `other` | Pronouns + light risk-emphasis callouts (not a separate document) |
+| `platform` | `apple` · `google` · `amazon` (multi-select) | Swaps the setup instructions (Screen Time / Family Link / Amazon Kids); pick several and each device layer is shown |
+| `approach` | `cautious` · `balanced` · `open` | **Pace, not destination.** Shifts where the kid sits on the one fixed schedule by ~±1 yr (cautious holds each unlock a year longer, open a year earlier). Grades and gates are identical across paces; every path still ends at full autonomy by 18. |
+| `for` | `boy` · `girl` · `lgbtq` · `neutral` | Drives the gender-aware **2026 threat model** (boy / girl / LGBTQ+ each get their own cited threat emphasis; neutral shows both sex-patterns) plus pronouns. Not a separate document. |
+| `pro` | `he` · `she` · `they` | Pronoun override, offered only when `for=lgbtq` (an LGBTQ+ kid may use any pronouns); otherwise pronouns follow `for`. |
 | `child` | free text | The kid's name (client-side only; only leaves the device inside a link the parent chooses to share) |
-| `school_device` | bool | Optional: "school sends home a managed device" fragment (the NYC-DOE/Chromebook content) |
+| `school` | bool (`1`) | Optional: "school sends home a managed device" fragment (the NYC-DOE/Chromebook content) |
 
 ## Safety model
 
@@ -69,11 +70,15 @@ that guarantee, since the separation above — not a gate — is what does the w
 content/            Single source of truth: the spine + fragments + schema.
                     Each section is tagged audience: both | parent | kid.
 apps/
-  parent/           → beyondparentalcontrols.com  (landing + configurator + /plan)
+  parent/           → beyondparentalcontrols.com  (landing + configurator + /plan + /research)
   kid/              → yourinternetroadmap.com      (roadmap only)
-tools/              Build: composes content into each app; the kid build
-                    EXCLUDES every parent-only (candid) fragment.
+tools/              build.mjs composes content into each app (the kid build
+                    EXCLUDES every parent-only fragment); watch.mjs rebuilds on change.
 ```
+
+Data claims in the parent plan carry superscript **footnotes to primary sources**
+(`h.cite()` / `h.footnotes()` in [`content/render.js`](content/render.js)); the full
+provenance, with confidence and geography caveats, lives on the parent `research` page.
 
 ## Build & deploy
 
@@ -90,7 +95,8 @@ Push to `main` and both sites deploy automatically (Vercel Git integration).
   Vercel settings, since Output Directory differs per project.)
 - `lib/` stays git-ignored — Vercel regenerates it every build, so the build's
   safety assertion (kid bundle carries no parent-only content) runs on every deploy.
-- Local: `npm run build`, then serve the repo and open `apps/<app>/`.
+- Local: `npm run build` (or `npm run watch` to rebuild on every `content/` change),
+  then serve the repo and open `apps/<app>/`.
 
 > **Why not Turborepo?** Turborepo earns its keep once you have several apps that
 > share real packages and benefit from build caching + affected-only task runs.
@@ -104,6 +110,16 @@ browser. Matches the original project's family-privacy stance.
 
 ## Status
 
-🚧 Scaffolding. First milestone: one fully-worked combination
-(Apple · Balanced · boy · age 9) end-to-end — landing → configurator → parent
-plan → kid plan — as the proof, then fill in the platform/gender fragments.
+Parent side is substantially built and every `for` × `platform` × `approach` ×
+school combination renders end-to-end:
+
+- Configurator + the candid parent plan, with a gender-aware **2026 threat model**
+  (boy / girl / LGBTQ+ / neutral) whose specific figures carry footnotes to primary
+  sources, plus a sourced `research.html`.
+- All three device layers (Apple · Google · Amazon, multi-select) and the
+  school-issued-device track.
+- Year-by-year schedule with **pace shifting** — cautious / balanced / open move the
+  "you are here" marker ±1 yr while every path still lands at full autonomy by 18.
+- Kid side renders the warm, candid-free roadmap.
+
+Next: deepen the kid-facing content and the platform-specific grade-by-grade steps.

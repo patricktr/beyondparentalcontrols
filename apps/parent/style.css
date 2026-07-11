@@ -105,6 +105,21 @@ td ul { margin: 0; padding-left: 1.1em; }
 .sources h2 { font-size: 1.15rem; }
 .sources p { margin: 0.6em 0; }
 
+/* footnotes / per-claim citations */
+sup.fn-ref { font-size: 0.7em; font-weight: 700; line-height: 0; white-space: nowrap; }
+sup.fn-ref a { padding: 0 1px; }
+[id^="ref"]:target { background: color-mix(in srgb, var(--accent) 22%, transparent); border-radius: 3px; }
+.footnotes { margin-top: 2.6em; font-size: 0.86rem; color: var(--muted); }
+.footnotes h2 { font-size: 1.15rem; }
+.footnotes ol { padding-left: 1.4em; }
+.footnotes li { margin: 0.55em 0; scroll-margin-top: 60px; }
+.footnotes li:target {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border-radius: 6px; padding: 4px 8px; margin-left: -8px;
+}
+.footnotes .fn-src { white-space: nowrap; }
+.footnotes .fn-back { margin-left: 6px; text-decoration: none; }
+
 /* landing page */
 h4 { font-size: 1rem; margin: 1.2em 0 0.3em; color: var(--accent-2); }
 .muted-note { color: var(--muted); font-weight: 400; font-size: 0.85em; }

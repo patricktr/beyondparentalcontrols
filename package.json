@@ -5,6 +5,7 @@
   "type": "module",
   "description": "A tailored, staged plan for taking a kid from locked-down to full online autonomy by 18. Parent + kid sites generated from one parametric content source.",
   "scripts": {
-    "build": "node tools/build.mjs"
+    "build": "node tools/build.mjs",
+    "watch": "node tools/watch.mjs"
   }
 }

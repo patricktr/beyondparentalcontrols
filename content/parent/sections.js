@@ -4,10 +4,10 @@
 //
 // PARENT-ONLY-SENTINEL — tools/build.mjs asserts this marker never reaches apps/kid/lib.
 //
-// Ported faithfully from the original parents' edition (Apple + boy + NYC-DOE
-// sourced). Hyper-local bits (the school Chromebook / Zscaler layer) are gated
-// behind the school-device flag; boy-sourced threat data carries a visible note
-// for non-boy configs; non-Apple platform steps are honest stubs, not invented.
+// Ported from the original parents' edition and since generalized: the 2026 threat
+// model is gender-aware (boy/girl/lgbtq/neutral branches, each footnoted); device
+// setup is fully built for Apple/Google/Amazon; hyper-local bits (the school
+// Chromebook / Zscaler layer) are gated behind the school-device flag.
 
 // Per-grade parent detail (Part 4 of the source), keyed by stage id.
 const GRADES = {
@@ -195,85 +195,159 @@ export default [
   },
 
   {
-    body: () => `
+    body: (h) => `
       <h2>What the evidence actually says</h2>
       <p>Five findings should drive the whole plan:</p>
       <ol class="findings">
         <li><strong>Filters barely work as a shield — but that’s not why you deploy them.</strong>
           The best study available found parental filtering explains <strong>less than 0.5% of the
           variance</strong> in whether a teen encounters sexual material; a preregistered replication
-          found no protective effect at all (Przybylski &amp; Nash 2018). Filters still earn their keep
+          found no protective effect at all${h.cite({ text: 'Przybylski &amp; Nash, “Internet Filtering and Adolescent Exposure to Online Sexual Material,” <em>Cyberpsychology, Behavior &amp; Social Networking</em> (2018)', url: 'https://www.oii.ox.ac.uk/parental-controls-ineffective-at-preventing-teens-from-seeing-pornography-new-research-finds/' })}. Filters still earn their keep
           in elementary school: they cut <em>accidental</em> exposure (the majority of first
           exposures), buy you years to teach, and signal family norms. Deploy them; never mistake them
           for the strategy.</li>
         <li><strong>Talking beats restricting — for harm.</strong> A 52-study meta-analysis
           (N=74,159): restrictive rules reduce screen <em>time</em>; active mediation (discussing,
-          co-using, coaching) reduces <em>harm</em> (Chen &amp; Shi 2019). Tools as a supplement,
+          co-using, coaching) reduces <em>harm</em>${h.cite({ text: 'Chen &amp; Shi, “Reducing Harm From Media: A Meta-Analysis of Parental Mediation,” <em>Journalism &amp; Mass Communication Quarterly</em> (2019)', url: 'https://scholars.hkbu.edu.hk/en/publications/reducing-harm-from-media-a-meta-analysis-of-parental-mediation-2/' })}. Tools as a supplement,
           conversation as the core, rules co-created and relaxed with age.</li>
         <li><strong>Rules have an expiration date: ~age 12 they protect, ~age 16 they backfire.</strong>
-          Strict internet rules predicted <em>less</em> problematic use under ~12.3 and <em>more</em>
-          over ~15.7 (Geurts 2025). Your step-down schedule is not generosity — it’s the mechanism.</li>
+          Strict internet rules predicted <em>less</em> problematic social-media use under ~12.3 and <em>more</em>
+          over ~15.7${h.cite({ text: 'Geurts et al., “Parental Internet-Specific Rules and the Onset of Adolescents’ Problematic Social Media Use,” <em>JMIR</em> (2025)', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC12445780/' })}. Your step-down schedule is not generosity — it’s the mechanism.</li>
         <li><strong>The disclosure channel is your single most valuable asset.</strong> 40% of kids
           <em>said</em> they’d tell a caregiver if an adult sent them nudes; <strong>only 10% of those
-          it happened to did</strong> (Thorn). Reasons for silence: embarrassment, fear of trouble,
+          it happened to did</strong>${h.cite({ text: 'Thorn, “Research Insights: Disclosure &amp; Reporting” (2022)', url: 'https://www.thorn.org/research/disclosure-and-reporting/' })}. Reasons for silence: embarrassment, fear of trouble,
           fear of losing devices. Nearly every serious harm below is survivable <em>if the kid tells
           you in hour one</em>. The evidence-backed move is the pre-commitment, said out loud and honored:
           <blockquote>“You will never be in trouble for telling me something that happened online, and I
           will never respond by taking your devices away. Even if you broke a rule first.”</blockquote>
           Never punish a disclosure with device removal — that single reaction teaches kids to handle
           the next crisis alone.</li>
-        <li><strong>Covert monitoring backfires; transparent scaffolding doesn’t.</strong> Teens rate
-          surveillance apps as trust-destroying; covert monitoring correlates with hidden behavior, not
-          safety. Everything here is done in the open — the kid knows what’s filtered, what’s visible,
+        <li><strong>Covert monitoring backfires; transparent scaffolding doesn’t.</strong> Teens
+          experience surveillance apps as overly restrictive and privacy-invasive: in an analysis of 736
+          kids’ reviews of 37 parental-control apps, 76% rated them one star, describing them as
+          privacy-violating, overly controlling, and damaging to the parent-child relationship${h.cite({ text: 'Ghosh et al., “Safety vs. Surveillance: What Children Have to Say about Mobile Apps for Parental Control,” ACM CHI (2018)', url: 'https://epublications.marquette.edu/mscs_fac/618/' })}. Everything here is done in the open — the kid knows what’s filtered, what’s visible,
           and the date it steps down. The driving-permit framing (“I’m in the car while you have your
           permit”) is the one that lands.</li>
       </ol>`,
   },
 
   {
-    // PARENT-ONLY threat model. Boy-sourced; flagged for non-boy configs.
-    body: (h) => `
+    // PARENT-ONLY threat model — gender-aware. Shared threats stay shared; where the
+    // data diverges by sex it branches (showBoy/showGirl), and `other` shows both.
+    // Every specific figure carries a footnote via h.cite() (see render.js).
+    body: (h) => {
+      const g = h.cfg.gender;
+      const showBoy = g === 'boy' || g === 'neutral' || g === 'lgbtq';
+      const showGirl = g === 'girl' || g === 'neutral' || g === 'lgbtq';
+      const showLgbtq = g === 'lgbtq';
+      const both = showBoy && showGirl; // neutral & lgbtq both show the two sex-patterns
+      const lead = (s) => (both ? `<strong>${s}</strong> ` : '');
+      return `
       <h2>The 2026 threat model</h2>
-      ${h.cfg.gender !== 'boy' ? `<p class="note"><strong>Sourcing note:</strong> the figures below are
-        drawn from research on boys — financial sextortion and the manosphere pipeline are boy-dominated
-        in the data. For ${h.kid}, the overall shape holds, but the mix skews differently for girls
-        (image-based abuse and coercive social dynamics feature more heavily); this section doesn’t yet
-        carry girl-specific citations. Treat the numbers as directional.</p>` : ''}
-      <h3>1. Financial sextortion — the one that kills</h3>
-      <p>The fastest-growing serious threat. NCMEC reports climbed 10,731 (2022) → <strong>50,000+
-        (2025, 137/day)</strong>; at least <strong>36 American teen boys have died by suicide</strong>
-        since 2021, some within <em>hours</em> of first contact. The script is industrialized: fake
-        attractive-girl account DMs → fast flirtation → move to Snapchat → reciprocal nude → instant
-        pivot to a screenshot of the follower list → payment demands. <strong>Why it’s winnable:</strong>
-        94% of reports come from the victim or a parent — pre-briefed kids come forward, and the threat
-        collapses the moment they stop engaging and tell an adult. No filter touches this.</p>
+      <p class="note">Every threat below can reach any kid — but the <em>mix</em> skews by sex and identity, and
+        where the data diverges this plan shows you ${h.kid}’s side of it.
+        ${showLgbtq ? 'LGBTQ+ kids carry a distinct layer of targeting and coercion, and because a birth sex isn’t assumed here, the boy- and girl-pattern data are shown too.'
+          : both ? 'Since you didn’t specify a sex, both patterns are shown: boys are hit hardest by financial sextortion and manosphere content; girls by coercive image abuse and the body-image/mental-health pipeline.'
+          : showGirl ? 'For girls, coercion, image-based abuse, and the body-image pipeline carry the most weight.'
+          : 'For boys, financial sextortion and the manosphere pipeline dominate.'}</p>
+      ${showLgbtq ? `
+      <h3>The LGBTQ+ layer — targeting, coercion, and a lifeline you shouldn’t cut</h3>
+      <p><strong>Start here, because the intuitive move is the wrong one.</strong> For an LGBTQ+ kid the
+        internet is disproportionately where safety lives: in a 2025 study <strong>44% felt very safe in
+        online spaces versus just 9% in person</strong>${h.cite({ text: 'Hopelab &amp; Born This Way Foundation, “‘Without It, I Wouldn’t Be Here Today’” (2025)', url: 'https://www.prnewswire.com/news-releases/new-research-from-hopelab-and-born-this-way-foundation-reveals-online-spaces-provide-a-lifeline-to-lgbtq-young-people-302398923.html' })},
+        and <strong>68% reach LGBTQ-affirming spaces online</strong> — often more than they can at home or
+        school${h.cite({ text: 'The Trevor Project, “2024 U.S. National Survey on the Mental Health of LGBTQ+ Young People” (2024)', url: 'https://www.thetrevorproject.org/survey-2024/' })}.
+        They also know it’s fragile: <strong>76% worry that platform or government restrictions will cut that
+        content off</strong>${h.cite({ text: 'Hopelab &amp; Born This Way Foundation, “‘Without It, I Wouldn’t Be Here Today’” (2025)', url: 'https://www.prnewswire.com/news-releases/new-research-from-hopelab-and-born-this-way-foundation-reveals-online-spaces-provide-a-lifeline-to-lgbtq-young-people-302398923.html' })}.
+        A blunt ban doesn’t read as protection here — it reads as losing the one room where they can breathe.</p>
+      <p>That lifeline sits beside a heavier threat load. LGBTQ+ minors are <strong>2–3× more likely to face
+        unwanted or risky online interactions</strong>${h.cite({ text: 'Thorn, “LGBTQ+ Minors are 3X More Likely to Experience Unwanted and Risky Online Interactions” (2023)', url: 'https://www.thorn.org/blog/new-research-from-thorn-lgbtq-minors-are-3x-more-likely-to-experience-unwanted-and-risky-online-interactions/' })},
+        and sextortion reaches them at <strong>36% versus 18%</strong> — with offenders likelier to actually
+        carry out the threat, and to weaponize outing and image-distribution rather than demand
+        cash${h.cite({ text: 'Thorn, “Sexual Extortion &amp; Young People” (2025)', url: 'https://www.thorn.org/research/library/sexual-extortion-young-people/' })};
+        for a closeted kid, “I’ll tell everyone” is uniquely coercive. There’s an ambient layer too: one
+        analysis counted <strong>1.7M+ tweets tying LGBTQ+ terms to “groomer”/“predator” slurs, up
+        119%</strong> in a year${h.cite({ text: 'Center for Countering Digital Hate, “Toxic Twitter: anti-LGBTQ+ hate” (2023)', url: 'https://counterhate.com/research/toxic-twitter-anti-lgbtq/' })}.
+        And the disparities are real: <strong>46% of trans and nonbinary youth seriously considered suicide in
+        the past year, versus 30% of cisgender LGBQ peers</strong>${h.cite({ text: 'The Trevor Project, “2024 U.S. National Survey on the Mental Health of LGBTQ+ Young People” (2024)', url: 'https://www.thetrevorproject.org/survey-2024/' })},
+        and body dissatisfaction runs up to <strong>~93% among trans youth</strong>${h.cite({ text: 'The Trevor Project, “LGBTQ Youth and Body Dissatisfaction” (2023)', url: 'https://www.thetrevorproject.org/research-briefs/lgbtq-youth-and-body-dissatisfaction-jan-2023/' })}.</p>
+      <p><strong>So the parenting move is additive, not subtractive:</strong> protect the safe spaces and keep
+        the disclosure channel wide open. The affirming community and the coercion risk often ride the same
+        apps, and a kid who fears being outed <em>by you</em> won’t come to you first. Safer spaces plus an
+        honest, no-punishment conversation beat a blunt ban — which this population experiences as a threat in
+        its own right.</p>` : ''}
+
+      <h3>1. Sextortion — the one that kills</h3>
+      <p>The fastest-growing serious threat: NCMEC reports climbed from 10,731 in 2022 to <strong>over
+        50,000 in 2025 (137 a day)</strong>${h.cite({ text: 'NCMEC, “Over 100 Reports Received Daily in 2025” (2026)', url: 'https://www.ncmec.org/blog/2026/ncmec-releases-new-sextortion-data-2025' })}.
+        No filter touches it — but a pre-briefed kid defuses it, because the threat collapses the moment they
+        stop engaging and tell an adult.</p>
+      ${showBoy ? `<p>${lead('For boys:')}The pattern is <strong>financial</strong>, and boys are nearly the whole
+        target — <strong>90% of financial-sextortion victims are boys 14–17</strong>${h.cite({ text: 'Thorn, “Trends in Financial Sextortion” (2024) — analysis of NCMEC CyberTipline data', url: 'https://www.thorn.org/research/library/financial-sextortion/' })}.
+        The script is industrialized: a fake attractive-girl account DMs → fast flirtation → move to Snapchat →
+        reciprocal nude → instant pivot to a screenshot of the follower list → payment demands. At least
+        <strong>36 American teen boys have died by suicide</strong> since 2021${h.cite({ text: 'NCMEC, “2024 in Numbers” (2025)', url: 'https://www.missingkids.org/blog/2025/ncmec-releases-new-data-2024-in-numbers' })},
+        in documented cases within hours of first contact. It’s winnable: <strong>94% of public reports</strong>
+        (where the reporter is known) come from the victim or a parent${h.cite({ text: 'NCMEC, “Over 100 Reports Received Daily in 2025” (2026)', url: 'https://www.ncmec.org/blog/2026/ncmec-releases-new-sextortion-data-2025' })}.</p>` : ''}
+      ${showGirl ? `<p>${lead('For girls:')}The sextortion pattern is more often <strong>coercive than financial</strong> —
+        the offender wants more images, sexual compliance, or humiliation rather than cash, and is likelier to be
+        someone she knows. Girls carry the surrounding image abuse: US women recall <strong>image-based sexual abuse
+        before 18 at 16.3% vs 5.4% for men</strong>, and unwanted online sexual solicitation at <strong>34.6% vs
+        9.2%</strong>${h.cite({ text: 'Finkelhor, Turner &amp; Colburn, “Prevalence of Online Sexual Offenses Against Children in the US,” <em>JAMA Network Open</em> (2022)', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9568794/' })}.
+        Same defense: no shame, no blame, tell an adult fast.</p>` : ''}
+
       <h3>2. Pornography — arrives via social feeds, not porn sites</h3>
-      <p>Average first exposure is <strong>age 12</strong>; 15% by 10; a majority accidental. The #1
-        vector in current UK data is <strong>X/Twitter (45%), ahead of dedicated porn sites</strong>,
-        then Instagram and Snapchat; 58% of exposed UK kids had seen strangulation content. So:
-        <strong>delaying algorithmic social feeds IS your porn filter</strong>, and you should assume
-        exposure around 10–12 and pre-teach the response.</p>
-      <h3>3. Algorithmic radicalization — passive, fast, aimed at boys</h3>
-      <p>Fresh accounts registered as teen boys had <strong>manosphere content pushed within 23
-        minutes</strong>; a UCL study watched misogynistic recommendations go from <strong>13% to 56%
-        in 5 days</strong>. The pipeline is short-form feeds + influencer ecosystems + gaming chat. At
-        the extreme, the FBI’s 764 alert documents groups recruiting 10–17-year-olds starting in
-        in-game chat. Defenses with evidence: delaying feeds, co-viewing, feed-hygiene skills, and
-        prebunking — not keyword filters.</p>
+      <p>Average first exposure is <strong>age 12</strong>; 15% by age 10; a majority accidental${h.cite({ text: 'Common Sense Media, “Teens and Pornography” (2023)', url: 'https://www.commonsensemedia.org/press-releases/new-report-reveals-truths-about-how-teens-engage-with-pornography' })}.
+        The most common source in current UK data is <strong>X/Twitter (45%), ahead of dedicated porn sites
+        (35%)</strong>, and <strong>58%</strong> of exposed children had seen porn depicting strangulation${h.cite({ text: 'Children’s Commissioner for England, “‘Sex is kind of broken now’” (2025)', url: 'https://www.childrenscommissioner.gov.uk/news-and-blogs/press-notice-children-see-violent-pornography-by-accident-via-social-media-and-as-young-as-six-new-research-from-the-childrens-commissioner-reveals/' })}.
+        So <strong>delaying algorithmic social feeds IS your porn filter</strong> — assume exposure around 10–12 and pre-teach the response.</p>
+
+      <h3>3. The algorithm’s pull — ${both ? 'radicalization and the body-image spiral' : showBoy ? 'radicalization, passive and fast' : 'the body-image and self-harm spiral'}</h3>
+      <p>The harm here isn’t a stranger — it’s the recommendation engine, which reads a new account’s apparent sex
+        within minutes and starts feeding whatever keeps that demographic scrolling.</p>
+      ${showBoy ? `<p>${lead('For boys:')}Fresh teen-boy accounts were fed <strong>toxic content within 23 minutes</strong>,
+        and by the end of the test <strong>76% (TikTok) / 78% (YouTube Shorts)</strong> of recommendations were
+        toxic${h.cite({ text: 'Baker, Ging &amp; Andreasen, “Recommending Toxicity,” DCU Anti-Bullying Centre (2024)', url: 'https://www.dcu.ie/antibullyingcentre/recommending-toxicity-summary-report' })};
+        a separate study watched misogynistic recommendations climb from <strong>13% to 56% in five days</strong>${h.cite({ text: 'UCL, with the University of Kent &amp; ASCL, “Safer Scrolling” (2024)', url: 'https://www.ucl.ac.uk/news/2024/feb/social-media-algorithms-amplify-misogynistic-content-teens' })}.
+        It works: <strong>63% of young men</strong> say they watch “masculinity influencers”${h.cite({ text: 'Movember Institute, “Young Men’s Health in a Digital World” (2025)', url: 'https://ex.movember.com/movember-institute/masculinities-report' })}.
+        Defenses with evidence: delaying feeds, co-viewing, feed-hygiene, and prebunking (“who profits from you angry?”) — not keyword filters.</p>` : ''}
+      ${showGirl ? `<p>${lead('For girls:')}The same engine points a different way. A new girl-coded account was served
+        <strong>suicide content within 2.6 minutes and eating-disorder content within 8</strong>, and a “vulnerable”
+        girl-coded account got <strong>12× more self-harm/suicide videos</strong>${h.cite({ text: 'Center for Countering Digital Hate, “Deadly by Design” (2022) — controlled bot experiment', url: 'https://counterhate.com/research/deadly-by-design/' })};
+        after 5–6 hours on TikTok, <strong>nearly 1 in 2</strong> videos served to mental-health-signalling accounts were
+        harmful${h.cite({ text: 'Amnesty International, “Driven into the Darkness” (2023)', url: 'https://www.amnesty.org/en/latest/news/2023/11/tiktok-risks-pushing-children-towards-harmful-content/' })}.
+        The platform’s own research found Instagram makes body image worse for <strong>1 in 3 teen girls</strong>${h.cite({ text: 'Meta internal research (2021), disclosed via the “Facebook Files”', url: 'https://metasinternalresearch.org/' })},
+        and <strong>80% of girls have used a filter or editing app to change their looks by age 13</strong>${h.cite({ text: 'Dove Self-Esteem Project, “The Selfie Talk” (2021) — Canada, n≈503', url: 'https://www.newswire.ca/news-releases/it-s-time-to-have-the-selfie-talk-new-dove-self-esteem-project-research-finds-80-of-canadian-girls-are-using-photo-editing-apps-by-the-age-of-13-866468860.html' })}.
+        Same defenses — plus following real-body accounts on purpose and naming the filter game out loud.</p>` : ''}
+
       <h3>4. The grooming funnel — the control point is the platform move</h3>
-      <p>Thorn: 40% of 9–17s have received a cold nude solicitation; <strong>65% have been asked to
-        move from a public/game chat to a private platform</strong>. That migration moment is the choke
-        point, and it’s teachable: gifts, flattery, secrecy, and platform-move requests are the four
-        red flags a 10-year-old can memorize.</p>
+      <p><strong>40%</strong> of 9–17s have received a cold nude solicitation and <strong>65% have been asked to move
+        from a public or game chat to a private platform</strong>${h.cite({ text: 'Thorn, “Online Grooming” (2022)', url: 'https://www.thorn.org/press-releases/online-grooming-report-young-peoples-online-encounters-growing-riskier/' })} —
+        that migration moment is the teachable choke point: gifts, flattery, secrecy, and platform-move requests are the
+        four red flags a 10-year-old can memorize.${showGirl ? ` Girls are groomed by adults at roughly <strong>3.5× the rate of boys (8.4% vs 2.4%)</strong>${h.cite({ text: 'Finkelhor, Turner &amp; Colburn, <em>JAMA Network Open</em> (2022)', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9568794/' })}.` : ''}
+        At the extreme, the FBI’s 2025 “764” alert documents violent online networks that target 10–17-year-olds across
+        social media, gaming, and messaging apps${h.cite({ text: 'FBI / IC3, Public Service Announcement I-030625-PSA (2025)', url: 'https://www.ic3.gov/PSA/2025/PSA250306' })}.</p>
+
       <h3>5. AI-era risks</h3>
       ${list([
-        '<strong>AI companions:</strong> 72% of US teens have used one; Common Sense’s assessment: not safe under 18. Treat companion AI like strangers-in-DMs.',
-        '<strong>Nudify/deepfake harassment:</strong> 1 in 17 teens has had deepfake nudes made of them. Making one is now a federal crime (TAKE IT DOWN Act); NCMEC’s <strong>Take It Down</strong> tool removes real and AI images.',
-        '<strong>Scams:</strong> 1.6M attacks disguised as Roblox files in 2024. “Nothing free exists” is a 4th-grade lesson.',
+        `<strong>AI companions:</strong> 72% of US teens have used one; Common Sense’s assessment is <em>not safe under 18</em>${h.cite({ text: 'Common Sense Media, “Talk, Trust, and Trade-Offs” (2025)', url: 'https://www.commonsensemedia.org/press-releases/nearly-3-in-4-teens-have-used-ai-companions-new-national-survey-finds' })}. Treat companion AI like strangers-in-DMs.`,
+        `<strong>Nudify/deepfake harassment:</strong> 1 in 17 teens has had deepfake nudes made of them${h.cite({ text: 'Thorn, “Deepfake Nudes &amp; Young People” (2025)', url: 'https://www.thorn.org/research/library/deepfake-nudes-and-young-people/' })}, and <strong>98% of the AI abuse imagery</strong> the IWF assessed depicted girls${h.cite({ text: 'Internet Watch Foundation, “AI-generated child sexual abuse,” Annual Data &amp; Insights (2024)', url: 'https://www.iwf.org.uk/annual-data-insights-report-2024/data-and-insights/ai-generated-child-sexual-abuse/' })}. Making one is now a federal crime — the TAKE IT DOWN Act requires 48-hour removal${h.cite({ text: 'TAKE IT DOWN Act, Pub. L. 119-12 / S.146 (2025)', url: 'https://www.congress.gov/bill/119th-congress/senate-bill/146' })}; NCMEC’s <strong>Take It Down</strong> tool pulls real and AI images.`,
+        `<strong>Scams:</strong> 1.6M attacks disguised as Roblox files in 2024${h.cite({ text: 'Kaspersky, “1.6 million cyberattacks on Roblox players detected in 2024” (2025)', url: 'https://me-en.kaspersky.com/about/press-releases/loading-cyberthreats-16-million-cyberattacks-on-roblox-players-detected-in-2024' })}. “Nothing free exists” is a 4th-grade lesson.`,
       ])}
-      <h3>6. Background rot: sleep, harassment, hate exposure</h3>
-      <p>75% of teen multiplayer gamers report harassment; the one harm with near-unanimous expert
-        consensus — sleep loss — is solved by boring logistics (a bedtime cutoff), not software.</p>`,
+
+      <h3>6. Background rot: sleep, harassment, mental health</h3>
+      <p>The one harm with near-unanimous expert consensus — <strong>sleep loss</strong> — is solved by boring logistics
+        (a bedtime cutoff), not software. The rest skews by sex:</p>
+      ${showGirl ? `<p>${lead('For girls:')}The mental-health gap is stark — <strong>52.6% of high-school girls report
+        persistent sadness or hopelessness vs 27.7% of boys</strong>, and girls attempt suicide at twice the rate
+        (12.6% vs 6.4%)${h.cite({ text: 'CDC, Youth Risk Behavior Survey 2023, <em>MMWR</em> (2024)', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC11559681/' })}.
+        Cyberbullying is more relational and lands harder: <strong>54% of girls 15–17 have been cyberbullied vs 44% of
+        boys</strong>, and girls are twice as likely to be targeted for their gender (14% vs 6%)${h.cite({ text: 'Pew Research Center, “Teens and Cyberbullying 2022” (2022)', url: 'https://www.pewresearch.org/internet/2022/12/15/teens-and-cyberbullying-2022/' })}.</p>` : ''}
+      ${showBoy ? `<p>${lead('For boys:')}The load concentrates in gaming spaces. <strong>75% of young multiplayer gamers
+        (10–17) report harassment</strong>${h.cite({ text: 'ADL, “Hate is No Game” (2023 data, published 2024)', url: 'https://www.adl.org/resources/press-release/three-quarters-young-people-experienced-harassment-online-gaming-2023-new' })},
+        and boys are called offensive names far more than girls (48% vs 32%)${h.cite({ text: 'Pew Research Center, “Teens and Video Games Today” (2024)', url: 'https://www.pewresearch.org/internet/2024/05/09/teens-and-video-games-today/' })}.
+        Boys also buy loot boxes at <strong>3× the rate of girls (37% vs 11%)</strong>${h.cite({ text: 'UK Gambling Commission, “Young People and Gambling 2022”', url: 'https://www.gamblingcommission.gov.uk/report/young-people-and-gambling-2022/ypg-2022-online-gambling-awareness-and-use-of-in-game-items-in-video-games' })}, the gambling-style mechanic most linked to later problem gambling.</p>` : ''}`;
+    },
   },
 
   {
@@ -324,15 +398,21 @@ export default [
   {
     body: (h) => `
       <h2>The year-by-year plan</h2>
-      <p>Each stage: what unlocks, what stays locked, what you teach, and a <strong>gate</strong> —
-        observable behaviors that green-light the next stage. Gates are readiness-based, so a cautious
-        kid can run a year behind the grade labels without drama. ${h.approach.tone}
-        ${h.current ? `<strong>Where ${h.kid} is now:</strong> ${h.current.grade}.` : ''}</p>
+      <p>Each stage lists what unlocks, what stays locked, what you teach, and a <strong>gate</strong> —
+        observable behaviors that green-light the next. The grade labels are one fixed schedule; the
+        <strong>${h.approach.label}</strong> pace just moves where ${h.kid} sits on it. ${h.approach.tone}
+        ${h.current
+          ? `<strong>Right now (${h.approach.label} pace): ${h.kid} is at ${h.current.grade}${h.next ? `, ${h.next.grade} up next` : ' — the final handoff'}.</strong>`
+          : `<strong>Right now (${h.approach.label} pace): ${h.kid} is just shy of the first stage.</strong>`}</p>
       ${h.stages.map((s) => gradeBlock(h, s)).join('\n')}`,
   },
 
   {
-    body: () => `
+    body: (h) => {
+      const g = h.cfg.gender;
+      const showGirl = g === 'girl' || g === 'neutral' || g === 'lgbtq';
+      const showLgbtq = g === 'lgbtq';
+      return `
       <h2>The conversation calendar</h2>
       <p>The tools above buy time; these conversations are the actual product — each short, repeated,
         and calm. Your <em>anticipated reaction</em> is the variable that decides whether you hear about
@@ -344,15 +424,20 @@ export default [
           <tr><td>Grade 4 (before exposure)</td><td><strong>Porn v1</strong></td><td>“Some videos show adults doing sexual stuff. It’s made for adults. If you see it: close it, come tell me, zero trouble. It might feel weird — all normal, none of it your fault.”</td></tr>
           <tr><td>Grade 5</td><td><strong>Grooming red flags</strong></td><td>“Four tells someone wants something from a kid online: gifts, over-the-top compliments, ‘keep it secret,’ and ‘let’s move to a different app.’ Any one = show me.”</td></tr>
           <tr><td>Grade 6</td><td><strong>Sextortion exists</strong></td><td>“People online pretend to be kids. Anyone asking for body photos is committing a crime against you. Telling me is winning.”</td></tr>
+          ${showGirl ? `<tr><td>Grade 6–7</td><td><strong>Filters &amp; the comparison trap</strong></td><td>“Almost every face and body you scroll past is filtered, edited, or posed — including your friends’ selfies. Follow a few real-body accounts on purpose. You don’t owe anyone a perfect photo, and comparison is a game the app wants you to keep losing.”</td></tr>` : ''}
+          ${showLgbtq ? `<tr><td>Grade 6–8</td><td><strong>Safe spaces &amp; outing threats</strong></td><td>“The communities that actually get you can live online — go find the good ones. But if anyone ever threatens to ‘out’ you unless you pay, send photos, or do what they say, that’s a crime against you, not a secret to keep. Come to me — I’ll never out you to anyone, and never as a punishment.”</td></tr>` : ''}
           <tr><td>Grade 7 — the big one</td><td><strong>Full sextortion drill</strong></td><td>The criminal script + the protocol: <strong>never pay · stop responding · don’t delete · screenshot · block · tell me · Take It Down · CyberTipline.</strong> Then the tabletop. FBI’s framing: “You are not the one in trouble.”</td></tr>
           <tr><td>Grade 7–8</td><td><strong>“You’re being farmed”</strong></td><td>Watch the Jigsaw videos; name the five techniques; then the running game: “what’s this clip trying to make you feel, and who profits?”</td></tr>
           <tr><td>Grade 9</td><td><strong>Porn v2 (realism)</strong></td><td>“Choreography, not documentation. It teaches consent and bodies the way action movies teach driving.” Short, occasional, no shame.</td></tr>
         </tbody>
-      </table>`,
+      </table>`;
+    },
   },
 
   {
-    body: () => `
+    body: (h) => {
+      const showLgbtq = h.cfg.gender === 'lgbtq';
+      return `
       <div class="emergency">
         <p><strong>If the worst happens — the 60-minute playbook:</strong></p>
         <ol>
@@ -362,6 +447,14 @@ export default [
             on AI fakes; the image never leaves your device — it’s hashed). The threat usually collapses
             within days once they stop engaging. Watch closely the first 48 hours — the lethal window —
             and say explicitly that this is survivable, common, and not character-defining.</li>
+          ${showLgbtq ? `<li><strong>An outing threat:</strong> Someone threatens to reveal that ${h.kid} is
+            LGBTQ+ unless they pay, send images, or comply. Lead with this: it is not their fault, and being
+            outed is never a punishment you’d impose. Do NOT pay and do NOT comply — it doesn’t stop the
+            threat. Preserve evidence (screenshot the messages and the profile; don’t delete the thread),
+            then block. Report to the CyberTipline (report.cybertip.org); if images are involved,
+            takeitdown.ncmec.org works on them too. Then make the promise explicit and keep it: their
+            identity is theirs to share — on their own timeline, with whoever they choose — never leverage,
+            never a consequence.</li>` : ''}
           <li><strong>They saw porn (or you found the history):</strong> Regulate yourself first.
             “Thanks for telling me / I’m not mad. What did you see? How did it land?” No device removal —
             that’s the punishment that teaches concealment.</li>
@@ -374,7 +467,8 @@ export default [
             prebunking angles (“who profits from you angry?”). Life After Hate / Parents for Peace exist
             for exactly this.</li>
         </ol>
-      </div>`,
+      </div>`;
+    },
   },
 
   {
@@ -394,7 +488,7 @@ export default [
   },
 
   {
-    body: () => `
+    body: (h) => `
       <div class="sources">
         <h2>Sources</h2>
         <p><strong>Efficacy &amp; frameworks:</strong> Przybylski &amp; Nash, <em>J. Pediatrics</em> 2017
@@ -415,10 +509,15 @@ export default [
         <p><strong>Teaching:</strong> Common Sense Digital Literacy 2025 · NCMEC NetSmartz · MediaSmarts ·
           Roozenbeek &amp; van der Linden, <em>Science Advances</em> 2022 (prebunking, n≈30k) · Stanford
           SHEG · FBI sextortion scripts.</p>
-        <p class="note"><em>Confidence: single-study findings (the Geurts inflection point) are labeled
-          as such; the filtering-ineffectiveness result includes a preregistered replication; the
-          23-minute and 13%→56% radicalization findings are from researcher-created fresh accounts —
-          worst-case passive exposure, not guaranteed individual experience.</em></p>
-      </div>`,
+        <p class="note"><em>Confidence &amp; caveats: the filtering-ineffectiveness result includes a
+          preregistered replication. The algorithmic-feed findings (23-minute / 13%→56% radicalization,
+          CCDH’s 2.6-minute and Amnesty’s “1 in 2” figures) come from researcher-created accounts and
+          bot experiments — worst-case passive exposure, not guaranteed individual experience. A few
+          girl-side figures are non-US (body-image and filter data are UK/Canada; the WHO problematic-use
+          gap is European) and are labelled where they appear. The “98% of AI abuse imagery depicts girls”
+          figure describes generated content; self-reported peer deepfake victimisation is more evenly
+          split by sex.</em></p>
+      </div>
+      ${h.footnotes({ title: 'References' })}`,
   },
 ];

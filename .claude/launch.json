@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "parent",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8791", "--bind", "127.0.0.1", "--directory", "apps/parent"],
+      "port": 8791
+    },
+    {
+      "name": "kid",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8792", "--bind", "127.0.0.1", "--directory", "apps/kid"],
+      "port": 8792
+    }
+  ]
+}

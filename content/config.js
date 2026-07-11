@@ -10,7 +10,7 @@ export const DEFAULTS = {
   age: 9,
   approach: 'balanced',
   platform: 'apple',
-  gender: 'other',
+  gender: 'neutral',
   schoolDevice: false,
 };
 
@@ -32,12 +32,21 @@ export function parseConfig(params) {
   // Multi-select: households can run more than one ecosystem. Dedupe, validate,
   // default to Apple. Accepts repeated ?platform=apple&platform=google.
   const platforms = [...new Set(params.getAll('platform').filter((p) => PLATFORM_IDS.includes(p)))];
+  // legacy `for=other` links fall through to the default (neutral).
+  const gender = oneOf(get('for'), ['boy', 'girl', 'lgbtq', 'neutral'], DEFAULTS.gender);
+  // Pronoun set: fixed for boy/girl/neutral; parent-chosen for lgbtq (default they),
+  // since an LGBTQ+ kid may use any pronouns. `gender` drives content; `pronouns` only rendering.
+  const pronouns = gender === 'boy' ? 'he'
+    : gender === 'girl' ? 'she'
+    : gender === 'lgbtq' ? oneOf(get('pro'), ['he', 'she', 'they'], 'they')
+    : 'they';
   return {
     child: cleanName(get('child')),
     age: clampInt(get('age'), 5, 18, DEFAULTS.age),
     approach: oneOf(get('approach'), ['cautious', 'balanced', 'open'], DEFAULTS.approach),
     platforms: platforms.length ? platforms : [DEFAULTS.platform],
-    gender: oneOf(get('for'), ['boy', 'girl', 'other'], DEFAULTS.gender),
+    gender,
+    pronouns,
     schoolDevice: get('school') === '1',
   };
 }
