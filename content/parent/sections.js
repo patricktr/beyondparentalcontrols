@@ -188,7 +188,7 @@ export default [
       <h1>Graduated Internet Access Plan</h1>
       <p class="doc-meta"><strong>Parents' edition.</strong> The full, candid plan. A kid-facing
         version lives on the kid site, safe to hand over.</p>
-      <p><strong>For:</strong> ${h.platform.name}-primary household, ${h.kid} at age ${h.cfg.age}${h.schoolDevice ? ', a school-issued device that comes home' : ''}. Younger siblings age into each stage.
+      <p><strong>For:</strong> ${h.platforms.map((p) => p.name).join(' + ')} household, ${h.kid} at age ${h.cfg.age}${h.schoolDevice ? ', a school-issued device that comes home' : ''}. Younger siblings age into each stage.
         <strong>Goal:</strong> locked-down → full autonomy by 18, on a deliberate schedule instead of by attrition.
         <strong>Built from:</strong> ~70 sources including peer-reviewed research, NCMEC/FBI data, and
         AAP/APA/eSafety guidance (footnotes at the end).</p>`,
@@ -283,7 +283,7 @@ export default [
         redundancy work. Estimated setup: one weekend.</p>
       <h3>Layer 0 — Identity (do this first)</h3>
       ${list([
-        `A supervised <strong>child account</strong> for each kid with a <strong>true birthdate</strong> (${h.platform.account}) — the store’s age tiers and platform age-assurance systems key off it.`,
+        `A supervised <strong>child account</strong> for each kid with a <strong>true birthdate</strong> (${h.platforms.map((p) => p.account).join('; ')}) — the store’s age tiers and platform age-assurance systems key off it.`,
         'One family email (yours) as the recovery address on every kid account. You hold all passwords until the handoff years.',
       ])}
       <h3>Layer 1 — Network (the layer everything obeys)</h3>
@@ -292,8 +292,8 @@ export default [
         '<strong>Router:</strong> point DHCP at your filtered DNS, and <strong>schedule a hard internet cutoff at bedtime</strong> — the single most evidence-backed control in this plan.',
         'Close the bypass holes now (they don’t matter at 9, they will at 13): block known VPN, proxy, and DoH endpoints (plus iCloud Private Relay on Apple); redirect outbound DNS to your resolver.',
       ])}
-      <h3>Layer 2 — ${h.platform.name} devices</h3>
-      ${list(DEVICE_LAYER[h.cfg.platform])}
+      <h3>Layer 2 — ${h.multiPlatform ? 'Devices' : `${h.platform.name} devices`}</h3>
+      ${h.platforms.map((p) => `${h.multiPlatform ? `<h4>${p.name} (${p.tool})</h4>` : ''}${list(DEVICE_LAYER[p.id])}`).join('')}
       ${h.schoolDevice ? `
       <h3>The school-issued device (the machine you don’t control)</h3>
       <p>A district-enrolled device obeys district policy, not you — parental tools can’t touch it, and
@@ -383,7 +383,7 @@ export default [
       <p><strong>Shopping list:</strong> a filtering DNS (~$20/yr) · a router that schedules a bedtime
         cutoff · everything else in the plan is free (device controls, platform teen accounts, all curricula).</p>
       <p><strong>This week:</strong> DNS profiles → router DNS + bedtime cutoff → bypass-hole blocks →
-        ${h.platform.name} child account + device controls${h.schoolDevice ? ' → email school IT re: the take-home device' : ''}
+        ${h.multiPlatform ? 'your' : h.platform.name} child account${h.multiPlatform ? 's' : ''} + device controls${h.schoolDevice ? ' → email school IT re: the take-home device' : ''}
         → family media agreement draft → porn-v1 and pledge conversations on the calendar.</p>
       <p><strong>Annual maintenance (each August):</strong> re-verify controls actually enforce ·
         review filter categories against the grade table · execute the scheduled step-downs

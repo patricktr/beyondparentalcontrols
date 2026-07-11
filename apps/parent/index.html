@@ -10,60 +10,69 @@
 <body>
 <div class="page">
   <h1>Beyond Parental Controls</h1>
-  <p class="lede">Filters and screen-time limits work when kids are little — and quietly
-     stop working right when the stakes get highest. The answer isn't more control. It's a
-     plan to hand it back, on purpose.</p>
+  <p class="lede">Filters and screen-time limits work when kids are little — and quietly backfire right
+     when the stakes get highest. The fix isn't more control. It's handing autonomy over
+     <em>on purpose</em>, on a schedule you can both see — instead of losing it by attrition.</p>
 
-  <p>This builds a graduated internet-access plan for your kid: locked-down now, full
-     autonomy by 18, with every step in between on a schedule you can both see. You get the
-     candid parent version; your kid gets a warm roadmap of their own.</p>
+  <h2>What the research actually says</h2>
+  <ul class="findings-lite">
+    <li><strong>Filters barely work as a shield.</strong> They explain under 0.5% of whether a teen
+      encounters explicit material. But they <em>do</em> cut <em>accidental</em> exposure for young
+      kids and buy you years to teach — so use them there, and never mistake them for the strategy.</li>
+    <li><strong>Rules protect kids under ~12 and backfire on teens over ~16.</strong> Strict controls
+      predict <em>less</em> problematic use in little kids and <em>more</em> in teenagers. The step-down
+      isn't generosity — it's the mechanism.</li>
+    <li><strong>Talking beats restricting — for harm.</strong> Restricting cuts screen <em>time</em>;
+      coaching and co-using cut actual <em>harm</em>. This plan front-loads the skills and the
+      conversations, then removes the guardrails on a published schedule.</li>
+  </ul>
 
-  <p>Answer a few questions:</p>
+  <h2>A roadmap you can personalize</h2>
+  <p>Answer a few questions and get a graduated internet-access plan written for your kid — locked-down
+     now, full autonomy by 18, every step in between laid out. You get the candid parent version; your
+     kid gets a warm roadmap of their own to keep.</p>
+
+  <div class="privacy">
+    <strong>🔒 Nothing you enter is transmitted.</strong> The whole plan is built right here in your
+    browser — no account, no server, no analytics, no cookies. Your answers (including your kid's name)
+    never leave this device unless you copy the link and share it yourself.
+  </div>
 
   <form class="config" action="plan.html" method="get">
-    <label>Your kid's name <span class="grade">(optional)</span>
+    <label>Your kid's name <span class="muted-note">(optional)</span>
       <input type="text" name="child" maxlength="24" placeholder="e.g. Milo" autocomplete="off">
     </label>
 
     <label>Age
       <select name="age">
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9" selected>9</option>
-        <option value="10">10</option>
-        <option value="11">11</option>
-        <option value="12">12</option>
-        <option value="13">13</option>
-        <option value="14">14</option>
-        <option value="15">15</option>
-        <option value="16">16</option>
-        <option value="17">17</option>
-        <option value="18">18</option>
+        <option value="5">5</option><option value="6">6</option><option value="7">7</option>
+        <option value="8">8</option><option value="9" selected>9</option><option value="10">10</option>
+        <option value="11">11</option><option value="12">12</option><option value="13">13</option>
+        <option value="14">14</option><option value="15">15</option><option value="16">16</option>
+        <option value="17">17</option><option value="18">18</option>
       </select>
     </label>
 
     <fieldset>
-      <legend>This roadmap is for a…</legend>
+      <legend>This roadmap is for a…<span class="help" tabindex="0" role="button" aria-label="Why we ask about this">?<span class="tip" role="tooltip">The online risks that hit hardest differ by gender — sextortion and “manosphere” content skew toward boys; image-based harassment and social pressure skew toward girls. We use it to flag <em>which risks to prioritize</em> and to get pronouns right. It changes emphasis, not the roadmap.</span></span></legend>
       <div class="pills">
         <label><input type="radio" name="for" value="boy"> boy</label>
         <label><input type="radio" name="for" value="girl"> girl</label>
-        <label><input type="radio" name="for" value="other" checked> kid <span class="grade">(they/them)</span></label>
+        <label><input type="radio" name="for" value="other" checked> kid <span class="muted-note">(they/them)</span></label>
       </div>
     </fieldset>
 
     <fieldset>
-      <legend>Your household's main devices</legend>
+      <legend>Your household's devices <span class="muted-note">(pick any — you'll get setup for each)</span></legend>
       <div class="pills">
-        <label><input type="radio" name="platform" value="apple" checked> Apple</label>
-        <label><input type="radio" name="platform" value="google"> Google / Android</label>
-        <label><input type="radio" name="platform" value="amazon"> Amazon Fire</label>
+        <label><input type="checkbox" name="platform" value="apple" checked> Apple</label>
+        <label><input type="checkbox" name="platform" value="google"> Google / Android</label>
+        <label><input type="checkbox" name="platform" value="amazon"> Amazon Fire</label>
       </div>
     </fieldset>
 
     <fieldset>
-      <legend>How do you want to pace it? <span class="grade">(same finish line — 18 — either way)</span></legend>
+      <legend>How do you want to pace it? <span class="muted-note">(same finish line — 18 — either way)</span></legend>
       <div class="pills">
         <label><input type="radio" name="approach" value="cautious"> Cautious</label>
         <label><input type="radio" name="approach" value="balanced" checked> Balanced</label>

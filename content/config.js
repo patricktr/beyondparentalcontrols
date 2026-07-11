@@ -14,6 +14,8 @@ export const DEFAULTS = {
   schoolDevice: false,
 };
 
+const PLATFORM_IDS = ['apple', 'google', 'amazon'];
+
 const oneOf = (val, allowed, fallback) => (allowed.includes(val) ? val : fallback);
 
 const clampInt = (val, lo, hi, fallback) => {
@@ -27,11 +29,14 @@ const cleanName = (val) =>
 
 export function parseConfig(params) {
   const get = (k) => params.get(k);
+  // Multi-select: households can run more than one ecosystem. Dedupe, validate,
+  // default to Apple. Accepts repeated ?platform=apple&platform=google.
+  const platforms = [...new Set(params.getAll('platform').filter((p) => PLATFORM_IDS.includes(p)))];
   return {
     child: cleanName(get('child')),
     age: clampInt(get('age'), 5, 18, DEFAULTS.age),
     approach: oneOf(get('approach'), ['cautious', 'balanced', 'open'], DEFAULTS.approach),
-    platform: oneOf(get('platform'), ['apple', 'google', 'amazon'], DEFAULTS.platform),
+    platforms: platforms.length ? platforms : [DEFAULTS.platform],
     gender: oneOf(get('for'), ['boy', 'girl', 'other'], DEFAULTS.gender),
     schoolDevice: get('school') === '1',
   };

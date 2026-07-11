@@ -47,7 +47,9 @@ export function helpers(cfg) {
     s: (verb) => (plural ? verb : verb + 's'), // "want" → "wants"
     Cap: (w) => w.charAt(0).toUpperCase() + w.slice(1),
 
-    platform: PLATFORMS[cfg.platform],
+    platforms: cfg.platforms.map((id) => ({ id, ...PLATFORMS[id] })),
+    platform: { id: cfg.platforms[0], ...PLATFORMS[cfg.platforms[0]] }, // primary
+    multiPlatform: cfg.platforms.length > 1,
     approach: APPROACH[cfg.approach],
     schoolDevice: cfg.schoolDevice,
     stages,

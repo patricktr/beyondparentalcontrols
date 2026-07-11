@@ -104,3 +104,33 @@ td ul { margin: 0; padding-left: 1.1em; }
 .sources { margin-top: 2.6em; font-size: 0.86rem; color: var(--muted); }
 .sources h2 { font-size: 1.15rem; }
 .sources p { margin: 0.6em 0; }
+
+/* landing page */
+h4 { font-size: 1rem; margin: 1.2em 0 0.3em; color: var(--accent-2); }
+.muted-note { color: var(--muted); font-weight: 400; font-size: 0.85em; }
+ul.findings-lite { list-style: none; padding-left: 0; margin: 1em 0; }
+ul.findings-lite > li { position: relative; padding-left: 27px; margin: 0.9em 0; }
+ul.findings-lite > li::before {
+  content: "✓"; position: absolute; left: 0; top: 0; color: var(--accent); font-weight: 700;
+}
+.privacy {
+  background: var(--accent-soft); border: 1px solid var(--accent);
+  border-radius: 12px; padding: 14px 18px; margin: 1.6em 0; font-size: 0.98rem; line-height: 1.5;
+}
+.help {
+  display: inline-grid; place-items: center; width: 18px; height: 18px; margin-left: 6px;
+  border-radius: 50%; background: var(--muted); color: var(--card); font-size: 0.72rem;
+  font-weight: 700; cursor: help; position: relative; vertical-align: middle; user-select: none;
+}
+.help .tip {
+  position: absolute; bottom: calc(100% + 9px); left: 50%; transform: translateX(-50%);
+  width: min(280px, 78vw); padding: 11px 13px; background: var(--card); color: var(--text);
+  border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 10px 34px rgba(0, 0, 0, 0.16);
+  font-size: 0.85rem; font-weight: 400; line-height: 1.45; text-transform: none; letter-spacing: normal;
+  opacity: 0; visibility: hidden; transition: opacity 0.12s; z-index: 5;
+}
+.help .tip::after {
+  content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+  border: 6px solid transparent; border-top-color: var(--card);
+}
+.help:hover .tip, .help:focus .tip, .help:focus-within .tip { opacity: 1; visibility: visible; }
