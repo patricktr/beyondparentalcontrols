@@ -12,15 +12,6 @@
 <header class="masthead"><div class="masthead-inner"><a class="wordmark" href="index.html">Beyond Parental Controls</a><div class="masthead-right"><a class="nav-link" href="index.html">← adjust choices</a></div></div></header>
 <div class="page">
   <main id="doc">Loading…</main>
-
-  <aside id="share">
-    <h2>Send this to your kid</h2>
-    <p>A safe, kid-facing version of this plan — nothing candid. This is the link to give them.</p>
-    <div class="share-row">
-      <input id="kidlink" class="js-kidlink" readonly aria-label="Kid link">
-      <button id="copy" class="js-kidcopy" type="button">Copy</button>
-    </div>
-  </aside>
 </div>
 
 <script type="module">
@@ -47,7 +38,7 @@
   kid.set('approach', cfg.approach);
   const kidUrl = `${KID_ORIGIN}?${kid.toString()}`;
 
-  // Populate + wire every kid-link control (the top-of-plan bar and the bottom card).
+  // Populate + wire the kid-link control (rendered inside the plan, just before Sources).
   document.querySelectorAll('.js-kidlink').forEach((el) => { el.value = kidUrl; });
   document.querySelectorAll('.js-kidcopy').forEach((btn) => {
     btn.addEventListener('click', async () => {

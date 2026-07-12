@@ -222,14 +222,8 @@ export default [
       <p><strong>For:</strong> ${h.platforms.map((p) => p.name).join(' + ')} household, ${h.kid} at age ${h.cfg.age}${h.schoolDevice ? ', a school-issued device that comes home' : ''}. Younger siblings age into each stage.
         <strong>Goal:</strong> locked-down → full autonomy by 18, on a deliberate schedule instead of by attrition.
         <strong>Built from:</strong> ~70 sources including peer-reviewed research, NCMEC/FBI data, and
-        AAP/APA/eSafety guidance (footnotes at the end).</p>
-      <div class="top-share">
-        <span class="top-share-label">🔗 <strong>Send this to your kid</strong> — the safe version</span>
-        <div class="share-row">
-          <input class="js-kidlink" readonly aria-label="Kid link">
-          <button class="js-kidcopy" type="button">Copy</button>
-        </div>
-      </div>`,
+        AAP/APA/eSafety guidance (footnotes at the end).
+        <strong>Kid's link:</strong> <a class="kidlink-jump" href="#share">here</a> — the safe version, further down.</p>`,
   },
 
   {
@@ -530,6 +524,19 @@ export default [
       <p><strong>Free curricula worth using at home:</strong> Common Sense Digital Literacy · Be
         Internet Awesome/Interland (gr. 4–6) · NCMEC “Into the Cloud” (ages 10–11) · MediaSmarts Break
         the Fake · Stanford Civic Online Reasoning · Jigsaw/Cambridge prebunking videos.</p>`,
+  },
+
+  {
+    body: () => `
+      <aside id="share">
+        <p class="eyebrow">Ready when you are</p>
+        <h2>Send this to your kid</h2>
+        <p>A safe, kid-facing version of this plan — nothing candid, no threat model. This is the link to hand over.</p>
+        <div class="share-row">
+          <input class="js-kidlink" readonly aria-label="Kid link">
+          <button class="js-kidcopy" type="button">Copy</button>
+        </div>
+      </aside>`,
   },
 
   {
