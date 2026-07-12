@@ -165,27 +165,58 @@ const DEVICE_LAYER = {
 
 const gradeBlock = (h, s) => {
   const g = GRADES[s.id];
-  const here = s.isCurrent ? ' <span class="here">you are here</span>' : '';
+  const isLast = h.stages[h.stages.length - 1].id === s.id;
+  const cls = ['stage', s.isCurrent && 'now', s.age === 13 && 'floor', isLast && 'handoff']
+    .filter(Boolean).join(' ');
+  const heading = `${s.grade} · age ${s.age} — “${s.title}”`;
   const unlocks = [...(g.unlocks || []), ...(g.schoolUnlock && h.schoolDevice ? [g.schoolUnlock] : [])];
-  const table = g.locked
-    ? `<table><thead><tr><th>${g.unlocks ? 'Unlocks' : ''}</th><th>${g.lockedLabel || 'Stays locked'}</th></tr></thead><tbody><tr>
-         <td>${list(unlocks)}</td><td>${list(g.locked)}</td></tr></tbody></table>`
-    : '';
-  const teach = g.teach ? `<p><strong>Teach this year:</strong></p>${list(g.teach)}` : '';
-  const outro = g.outro ? list(g.outro) : '';
-  const gate = g.gate ? `<p><strong>Gate to the next stage:</strong> ${h.kid} ${g.gate}</p>` : '';
-  return `
-    <div class="year${s.isCurrent ? ' now' : ''}">
-      <h3>${s.grade} · age ${s.age} — “${s.title}”${here}</h3>
-      <p>${g.lead}</p>
-      ${table}${teach}${outro}${gate}
-    </div>`;
+  const items = (arr) => (arr || []).map((i) => `<li>${i}</li>`).join('');
+
+  let year;
+  if (s.isCurrent) {
+    const grid = (unlocks.length || g.locked)
+      ? `<div class="unlock-grid">
+          <div><div class="col-label u">Unlocks</div><ul class="u-list">${items(unlocks)}</ul></div>
+          <div><div class="col-label l">${g.lockedLabel || 'Stays locked'}</div><ul class="l-list">${items(g.locked)}</ul></div>
+        </div>`
+      : '';
+    const teach = g.teach ? `<div class="teach-box"><strong>Teach this year:</strong>${list(g.teach)}</div>` : '';
+    const outro = g.outro ? list(g.outro) : '';
+    const gate = g.gate ? `<p class="gate"><strong>Gate to the next stage:</strong> ${h.kid} ${g.gate}</p>` : '';
+    year = `<div class="year">
+        <div class="year-head"><h3>${heading}</h3><span class="here-pill">you are here</span></div>
+        <p>${g.lead}</p>
+        ${grid}${teach}${outro}${gate}
+      </div>`;
+  } else if (isLast) {
+    const outro = g.outro ? list(g.outro) : '';
+    year = `<div class="year">
+        <h3>${heading}</h3>
+        <p>${g.lead}</p>
+        ${outro}
+      </div>`;
+  } else {
+    const lockLabel = g.lockedLabel
+      ? `<strong class="s">${g.lockedLabel}:</strong>`
+      : '<strong class="l">Locked:</strong>';
+    const runline = (unlocks.length || g.locked)
+      ? `<div class="runline"><strong class="u">Unlocks:</strong> ${unlocks.join(' · ')} · ${lockLabel} ${(g.locked || []).join(' · ')}</div>`
+      : '';
+    year = `<div class="year">
+        <h3>${heading}</h3>
+        <p class="lead">${g.lead}</p>
+        ${runline}
+      </div>`;
+  }
+
+  return `<div class="${cls}"><span class="age">${s.age}</span><span class="node"></span>${year}</div>`;
 };
 
 export default [
   {
     body: (h) => `
-      <h1>Graduated Internet Access Plan</h1>
+      <p class="eyebrow config-summary">Parents' edition · ${h.platforms.map((p) => p.name).join(' + ')} · ${h.approach.label} · ${h.they}/${h.them} · age ${h.cfg.age}</p>
+      <h1 class="doc-title">Graduated Internet Access Plan</h1>
       <p class="doc-meta"><strong>Parents' edition.</strong> The full, candid plan. A kid-facing
         version lives on the kid site, safe to hand over.</p>
       <p><strong>For:</strong> ${h.platforms.map((p) => p.name).join(' + ')} household, ${h.kid} at age ${h.cfg.age}${h.schoolDevice ? ', a school-issued device that comes home' : ''}. Younger siblings age into each stage.
@@ -196,9 +227,10 @@ export default [
 
   {
     body: (h) => `
+      <p class="eyebrow">Section 1</p>
       <h2>What the evidence actually says</h2>
       <p>Five findings should drive the whole plan:</p>
-      <ol class="findings">
+      <ol class="evidence">
         <li><strong>Filters barely work as a shield — but that’s not why you deploy them.</strong>
           The best study available found parental filtering explains <strong>less than 0.5% of the
           variance</strong> in whether a teen encounters sexual material; a preregistered replication
@@ -243,6 +275,7 @@ export default [
       const both = showBoy && showGirl; // neutral & lgbtq both show the two sex-patterns
       const lead = (s) => (both ? `<strong>${s}</strong> ` : '');
       return `
+      <p class="eyebrow">Section 2</p>
       <h2>The 2026 threat model</h2>
       <p class="note">Every threat below can reach any kid — but the <em>mix</em> skews by sex and identity, and
         where the data diverges this plan shows you ${h.kid}’s side of it.
@@ -352,24 +385,23 @@ export default [
 
   {
     body: (h) => `
+      <p class="eyebrow">Section 3</p>
       <h2>The stack — set up once, before school starts</h2>
       <p>No single layer survives a motivated 13-year-old, so you run several thin layers and let the
         redundancy work. Estimated setup: one weekend.</p>
-      <h3>Layer 0 — Identity (do this first)</h3>
-      ${list([
+      <div class="stack">
+      <div class="layer"><span class="layer-label">Layer 0 — Identity (do this first)</span><div class="layer-body">${list([
         `A supervised <strong>child account</strong> for each kid with a <strong>true birthdate</strong> (${h.platforms.map((p) => p.account).join('; ')}) — the store’s age tiers and platform age-assurance systems key off it.`,
         'One family email (yours) as the recovery address on every kid account. You hold all passwords until the handoff years.',
-      ])}
-      <h3>Layer 1 — Network (the layer everything obeys)</h3>
-      ${list([
+      ])}</div></div>
+      <div class="layer"><span class="layer-label">Layer 1 — Network (the layer everything obeys)</span><div class="layer-body">${list([
         '<strong>A filtering DNS resolver</strong> (e.g. NextDNS, ~$20/yr) — one profile per kid. Block porn + bypass methods (VPNs/proxies/DoH), enforce SafeSearch and YouTube Restricted Mode, enable logging so <em>you</em> can see what’s blocked (transparently). Installs via a device profile so it follows the device onto cellular and friends’ Wi-Fi.',
         '<strong>Router:</strong> point DHCP at your filtered DNS, and <strong>schedule a hard internet cutoff at bedtime</strong> — the single most evidence-backed control in this plan.',
         'Close the bypass holes now (they don’t matter at 9, they will at 13): block known VPN, proxy, and DoH endpoints (plus iCloud Private Relay on Apple); redirect outbound DNS to your resolver.',
-      ])}
-      <h3>Layer 2 — ${h.multiPlatform ? 'Devices' : `${h.platform.name} devices`}</h3>
-      ${h.platforms.map((p) => `${h.multiPlatform ? `<h4>${p.name} (${p.tool})</h4>` : ''}${list(DEVICE_LAYER[p.id])}`).join('')}
+      ])}</div></div>
+      <div class="layer"><span class="layer-label">Layer 2 — ${h.multiPlatform ? 'Devices' : `${h.platform.name} devices`}</span><div class="layer-body">${h.platforms.map((p) => `${h.multiPlatform ? `<h4>${p.name} (${p.tool})</h4>` : ''}${list(DEVICE_LAYER[p.id])}`).join('')}</div></div>
       ${h.schoolDevice ? `
-      <h3>The school-issued device (the machine you don’t control)</h3>
+      <div class="layer"><span class="layer-label">The school-issued device (the machine you don’t control)</span><div class="layer-body">
       <p>A district-enrolled device obeys district policy, not you — parental tools can’t touch it, and
         management survives a wipe. In many districts (NYC’s DOE runs <strong>Zscaler</strong>) it
         tunnels <em>all</em> traffic — DNS included — to a cloud filter that runs on and off the school
@@ -379,24 +411,26 @@ export default [
         '<strong>Physics.</strong> It lives in common rooms and charges overnight outside bedrooms. Placement <em>is</em> the enforcement, and it needs no software.',
         '<strong>Your router’s only lever is on/off.</strong> A device-level bedtime block (a hard traffic block, not DNS-based) still works regardless of the school filter.',
         '<strong>Email school IT</strong> — confirm off-network filtering is on, ask what’s monitored and who sees it, and whether take-home is actually required for this grade. For a young kid, “it lives in the classroom” is often the cleanest answer.',
-      ])}` : ''}
-      <h3>Layer 4 — Platforms (configure as each is unlocked)</h3>
-      ${list([
+      ])}</div></div>` : ''}
+      <div class="layer"><span class="layer-label">Layer 4 — Platforms (configure as each is unlocked)</span><div class="layer-body">${list([
         '<strong>YouTube:</strong> YouTube Kids → supervised account: Explore (~9+) → Explore More (~13+) → Most of YouTube. Supervised accounts can’t comment or upload — half the value.',
         '<strong>Games (Minecraft etc.):</strong> link a parent account, set chat to people known in person, set the maturity rating at the kid’s age, loosen on schedule.',
         '<strong>Consoles/Spotify:</strong> family apps for play limits, ratings, purchase approval, and explicit-content filters the kid can’t flip back.',
-      ])}
-      <h3>Layer 5 — Monitoring (the honest version)</h3>
+      ])}</div></div>
+      <div class="layer"><span class="layer-label">Layer 5 — Monitoring (the honest version)</span><div class="layer-body">
       <p>Optional, and only worth it transparent. On <strong>Apple</strong>, third-party apps can’t read
         message/app content (no visibility into Snap/TikTok/Discord); on <strong>Android</strong> a
         VPN-based monitor filters but rarely reads app content either; on <strong>Amazon</strong>, the
         Parent Dashboard already surfaces activity and browsing history. Reasonable default everywhere:
         <strong>skip the monitoring apps; use your DNS logs + platform-native family tools + weekly
-        sit-downs.</strong> If you do use alerting in middle school, disclose it and sunset it by ~15–16.</p>`,
+        sit-downs.</strong> If you do use alerting in middle school, disclose it and sunset it by ~15–16.</p>
+      </div></div>
+      </div>`,
   },
 
   {
     body: (h) => `
+      <p class="eyebrow">Section 4 · The centerpiece</p>
       <h2>The year-by-year plan</h2>
       <p>Each stage lists what unlocks, what stays locked, what you teach, and a <strong>gate</strong> —
         observable behaviors that green-light the next. The grade labels are one fixed schedule; the
@@ -404,7 +438,9 @@ export default [
         ${h.current
           ? `<strong>Right now (${h.approach.label} pace): ${h.kid} is at ${h.current.grade}${h.next ? `, ${h.next.grade} up next` : ' — the final handoff'}.</strong>`
           : `<strong>Right now (${h.approach.label} pace): ${h.kid} is just shy of the first stage.</strong>`}</p>
-      ${h.stages.map((s) => gradeBlock(h, s)).join('\n')}`,
+      <div class="schedule">
+      ${h.stages.map((s) => gradeBlock(h, s)).join('\n')}
+      </div>`,
   },
 
   {
@@ -413,6 +449,7 @@ export default [
       const showGirl = g === 'girl' || g === 'neutral' || g === 'lgbtq';
       const showLgbtq = g === 'lgbtq';
       return `
+      <p class="eyebrow">Section 5</p>
       <h2>The conversation calendar</h2>
       <p>The tools above buy time; these conversations are the actual product — each short, repeated,
         and calm. Your <em>anticipated reaction</em> is the variable that decides whether you hear about
@@ -439,7 +476,7 @@ export default [
       const showLgbtq = h.cfg.gender === 'lgbtq';
       return `
       <div class="emergency">
-        <p><strong>If the worst happens — the 60-minute playbook:</strong></p>
+        <div class="emg-label">If the worst happens — the 60-minute playbook:</div>
         <ol>
           <li><strong>Sextortion in progress:</strong> Believe them. Say the pledge back. Do NOT pay,
             do NOT delete the thread. Screenshot everything. Block. Report: CyberTipline
@@ -473,6 +510,7 @@ export default [
 
   {
     body: (h) => `
+      <p class="eyebrow">Section 6</p>
       <h2>Quick-reference</h2>
       <p><strong>Shopping list:</strong> a filtering DNS (~$20/yr) · a router that schedules a bedtime
         cutoff · everything else in the plan is free (device controls, platform teen accounts, all curricula).</p>

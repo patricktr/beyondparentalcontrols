@@ -9,30 +9,58 @@
 <script src="analytics.js"></script>
 </head>
 <body>
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="wordmark" href="index.html">Beyond Parental Controls</a>
+    <div class="masthead-right">
+      <a class="nav-link" href="research.html">The research</a>
+      <span class="status-caption">No account · No cookies</span>
+    </div>
+  </div>
+</header>
+
 <div class="page">
-  <h1>Beyond Parental Controls</h1>
+  <p class="eyebrow accent">A staged plan · locked-down now → autonomy by 18</p>
+  <h1>Hand over the internet <em>on purpose</em> — not by attrition.</h1>
   <p class="lede">Filters and screen-time limits work when kids are little — and quietly backfire right
-     when the stakes get highest. The fix isn't more control. It's handing autonomy over
-     <em>on purpose</em>, on a schedule you can both see — instead of losing it by attrition.</p>
+    when the stakes get highest. The fix isn't more control. It's handing autonomy over <em>on purpose</em>,
+    on a schedule you can both see — instead of losing it by attrition.</p>
 
-  <h2>What the research actually says</h2>
-  <ul class="findings-lite">
-    <li><strong>Filters barely work as a shield.</strong> They explain under 0.5% of whether a teen
-      encounters explicit material. But they <em>do</em> cut <em>accidental</em> exposure for young
-      kids and buy you years to teach — so use them there, and never mistake them for the strategy.</li>
-    <li><strong>Rules protect kids under ~12 and backfire on teens over ~16.</strong> Strict controls
-      predict <em>less</em> problematic use in little kids and <em>more</em> in teenagers. The step-down
-      isn't generosity — it's the mechanism.</li>
-    <li><strong>Talking beats restricting — for harm.</strong> Restricting cuts screen <em>time</em>;
-      coaching and co-using cut actual <em>harm</em>. This plan front-loads the skills and the
-      conversations, then removes the guardrails on a published schedule.</li>
-  </ul>
-  <p class="muted-note"><a href="research.html">Read the research behind the plan →</a> — every figure, with primary sources.</p>
+  <section class="section">
+    <p class="eyebrow">The evidence</p>
+    <h2>What the research actually says</h2>
+    <div class="findings">
+      <div class="finding-row"><span class="tick">✓</span><p><strong>Filters barely work as a shield.</strong>
+        They explain under 0.5% of whether a teen encounters explicit material. But they <em>do</em> cut
+        <em>accidental</em> exposure for young kids and buy you years to teach — so use them there, and never
+        mistake them for the strategy.</p></div>
+      <div class="finding-row"><span class="tick">✓</span><p><strong>Rules protect kids under ~12 and backfire on teens over ~16.</strong>
+        Strict controls predict <em>less</em> problematic use in little kids and <em>more</em> in teenagers.
+        The step-down isn't generosity — it's the mechanism.</p></div>
+      <div class="finding-row"><span class="tick">✓</span><p><strong>Talking beats restricting — for harm.</strong>
+        Restricting cuts screen <em>time</em>; coaching and co-using cut actual <em>harm</em>. This plan
+        front-loads the skills and the conversations, then removes the guardrails on a published schedule.</p></div>
+    </div>
+    <p class="read-research"><a href="research.html">Read the research behind the plan →</a> — every figure, with primary sources.</p>
+  </section>
 
-  <h2>A roadmap you can personalize</h2>
-  <p>Answer a few questions and get a graduated internet-access plan written for your kid — locked-down
-     now, full autonomy by 18, every step in between laid out. You get the candid parent version; your
-     kid gets a warm roadmap of their own to keep.</p>
+  <section class="section">
+    <p class="eyebrow">The plan</p>
+    <h2>A roadmap you can personalize</h2>
+    <p>Answer a few questions and get a graduated internet-access plan written for your kid — locked-down
+      now, full autonomy by 18, every step in between laid out. You get the candid parent version; your
+      kid gets a warm roadmap of their own to keep.</p>
+
+    <div class="preview">
+      <p class="eyebrow" style="margin-bottom: 16px;">A glance at the schedule</p>
+      <div class="preview-rail">
+        <div class="preview-row mark"><span class="age">9</span><span class="dot"></span><span class="label">Grade 4 · Finding your balance, together</span></div>
+        <div class="preview-row"><span class="age">13</span><span class="dot"></span><span class="label">Grade 8 · Your first accounts</span></div>
+        <div class="preview-row"><span class="age">15</span><span class="dot"></span><span class="label">Grade 10 · We mostly step back</span></div>
+        <div class="preview-row end"><span class="age">18</span><span class="dot"></span><span class="label">The handoff · Full autonomy</span></div>
+      </div>
+    </div>
+  </section>
 
   <div class="privacy">
     <strong>🔒 Your answers never leave your device.</strong> The whole plan is built right here in your
@@ -43,18 +71,23 @@
   </div>
 
   <form class="config" action="plan.html" method="get">
+    <p class="form-eyebrow">Build your plan</p>
+
     <label>Your kid's name <span class="muted-note">(optional)</span>
       <input type="text" name="child" maxlength="24" placeholder="e.g. Milo" autocomplete="off">
     </label>
 
     <label>Age
-      <select name="age">
-        <option value="5">5</option><option value="6">6</option><option value="7">7</option>
-        <option value="8">8</option><option value="9" selected>9</option><option value="10">10</option>
-        <option value="11">11</option><option value="12">12</option><option value="13">13</option>
-        <option value="14">14</option><option value="15">15</option><option value="16">16</option>
-        <option value="17">17</option><option value="18">18</option>
-      </select>
+      <div class="age-row">
+        <select name="age">
+          <option value="5">5</option><option value="6">6</option><option value="7">7</option>
+          <option value="8">8</option><option value="9" selected>9</option><option value="10">10</option>
+          <option value="11">11</option><option value="12">12</option><option value="13">13</option>
+          <option value="14">14</option><option value="15">15</option><option value="16">16</option>
+          <option value="17">17</option><option value="18">18</option>
+        </select>
+        <span class="hint">→ places the "you are here" marker</span>
+      </div>
     </label>
 
     <fieldset>
@@ -66,7 +99,7 @@
         <label><input type="radio" name="for" value="neutral" checked> neutral <span class="muted-note">(they/them)</span></label>
       </div>
       <div class="pills" id="pronoun-picker" hidden>
-        <span class="muted-note" style="width: 100%; margin-bottom: -4px;">Pronouns for the plan</span>
+        <span class="picker-label">Pronouns for the plan</span>
         <label><input type="radio" name="pro" value="he" disabled> he/him</label>
         <label><input type="radio" name="pro" value="she" disabled> she/her</label>
         <label><input type="radio" name="pro" value="they" checked disabled> they/them</label>
@@ -98,6 +131,8 @@
 
     <button type="submit">Build our plan →</button>
   </form>
+
+  <p class="foot">No cookies · Anonymous analytics · noindex · Renders in your browser</p>
 </div>
 <script>
   // Show the pronoun picker only for LGBTQ+ (an LGBTQ+ kid may use any pronouns);

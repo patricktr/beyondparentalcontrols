@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #eef7f0; -webkit-font-smoothing: antialiased; }
+  a { color: #1f8a4c; }
+  ::selection { background: #cdeed8; }
+  details.more > summary { list-style: none; }
+  details.more > summary::-webkit-details-marker { display: none; }
+  details.more[open] .chev { transform: rotate(90deg); }
+  .chev { transition: transform 0.18s ease; display: inline-block; }
+</style>
+</helmet>
+
+<div style="background:#f3faf4; color:#23302a; font-family:'Nunito',sans-serif; min-height:100vh; overflow:hidden;">
+
+  <!-- top bar -->
+  <div style="background:#1f8a4c; color:#fff;">
+    <div style="max-width:680px; margin:0 auto; padding:12px 22px; display:flex; align-items:center; gap:10px;">
+      <span style="width:28px; height:28px; border-radius:9px; background:#ffd66b; display:grid; place-items:center; font-size:16px;">🧭</span>
+      <span style="font-family:'Baloo 2',cursive; font-weight:700; font-size:17px; letter-spacing:0.01em;">Your Internet Roadmap</span>
+    </div>
+  </div>
+
+  <div style="max-width:680px; margin:0 auto; padding:34px 22px 90px;">
+
+    <!-- ===== HERO ===== -->
+    <div style="text-align:center; padding:10px 0 4px;">
+      <div style="display:inline-block; font-family:'Baloo 2',cursive; font-weight:600; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:#127a41; background:#dff2e5; border-radius:999px; padding:6px 16px; margin-bottom:16px;">🚀 A plan just for you</div>
+      <h1 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:46px; line-height:1.02; letter-spacing:-0.01em; margin:0 0 10px; color:#123a24;">Your Internet<br>Roadmap</h1>
+      <p style="font-size:19px; font-weight:600; color:#4e6157; margin:0 auto 6px; max-width:440px;">How you earn more freedom online — one year at a time.</p>
+    </div>
+
+    <!-- journey bar -->
+    <div style="background:#fff; border:2px solid #d8e6dc; border-radius:22px; padding:22px 24px 18px; margin:24px 0 0; box-shadow:0 8px 24px -14px rgba(20,60,36,0.3);">
+      <div style="position:relative; height:16px; border-radius:10px; background:linear-gradient(90deg,#1f8a4c 0%,#12a39a 45%,#f0a83c 100%); margin:8px 6px 0;">
+        <!-- you-are-here marker -->
+        <div style="position:absolute; left:0; top:-6px; width:28px; height:28px; border-radius:50%; background:#fff; border:4px solid #1f8a4c; display:grid; place-items:center; font-size:13px; transform:translateX(-6px);">🚲</div>
+        <div style="position:absolute; right:-6px; top:-7px; width:30px; height:30px; border-radius:50%; background:#f0a83c; border:3px solid #fff; display:grid; place-items:center; font-size:15px;">🎉</div>
+      </div>
+      <div style="display:flex; justify-content:space-between; margin-top:12px; font-family:'Baloo 2',cursive; font-weight:600;">
+        <div style="text-align:left;"><div style="font-size:20px; color:#1f8a4c;">Age 9</div><div style="font-size:12px; font-weight:700; color:#127a41; letter-spacing:0.04em;">YOU ARE HERE</div></div>
+        <div style="text-align:right;"><div style="font-size:20px; color:#e0902a;">Age 18</div><div style="font-size:12px; font-weight:700; color:#c47f1f; letter-spacing:0.04em;">ALL YOURS</div></div>
+      </div>
+    </div>
+
+    <!-- intro + big idea -->
+    <p style="font-size:18px; line-height:1.6; color:#3a473f; margin:26px 0 0;"><strong style="font-weight:800;">Hey!</strong> This is the plan for how you'll use the internet as you grow up. You and your parents are a team on this, so you wrote it down together. Here's the big idea:</p>
+
+    <div style="background:#e4f5ea; border:2px solid #bfe6cd; border-radius:20px; padding:20px 24px; margin:20px 0 0;">
+      <p style="font-size:19px; line-height:1.5; font-weight:800; color:#146336; margin:0 0 12px; font-family:'Baloo 2',cursive;">Every single year, you get more freedom online — as long as you show you're ready for it. 🌱</p>
+      <p style="font-size:16.5px; line-height:1.6; color:#3a473f; margin:0 0 10px;">It's a little like learning to ride a bike. First we hold on. Then we let go but run right beside you. Then one day you ride off on your own. We are <em>not</em> going to hold on forever — we let go a little more every year, on a schedule you can see right here.</p>
+      <p style="font-size:16.5px; line-height:1.6; color:#3a473f; margin:0;">The rules aren't because we don't trust you. They're just our hand on the seat while you find your balance. And that hand always comes off.</p>
+    </div>
+
+    <!-- ===== PROMISE ===== -->
+    <div style="margin:38px 0 0;">
+      <h2 style="font-family:'Baloo 2',cursive; font-weight:700; font-size:28px; color:#123a24; margin:0 0 4px; display:flex; align-items:center; gap:10px;"><span style="font-size:26px;">🤝</span>Our promise to you</h2>
+      <p style="font-size:16.5px; color:#4e6157; margin:6px 0 16px;">This is the most important part of the whole plan, so read it twice:</p>
+      <div style="background:#fff7e6; border:2.5px solid #ecb63f; border-radius:20px; padding:22px 24px; box-shadow:0 8px 24px -14px rgba(180,130,20,0.4);">
+        <p style="font-size:20px; line-height:1.4; font-weight:800; color:#8a5a10; margin:0 0 14px; font-family:'Baloo 2',cursive;">You will NEVER be in trouble for telling us something that happened online.</p>
+        <p style="font-size:16.5px; line-height:1.6; color:#5a4a2a; margin:0 0 12px;">We will never take your devices away because someone else did something to you — even if you broke a rule first. If something online ever scares you, confuses you, or just makes you feel weird — you can always come tell us. Always. We might feel a little worried, but we will <strong style="font-weight:800;">never</strong> be mad at you for telling the truth.</p>
+        <p style="font-size:16.5px; line-height:1.6; color:#5a4a2a; margin:0;"><strong style="font-weight:800;">Your promise back:</strong> when something feels off, close it and come find us. That's the whole job. ✅</p>
+      </div>
+    </div>
+
+    <!-- ===== ALWAYS TRUE ===== -->
+    <div style="margin:40px 0 0;">
+      <h2 style="font-family:'Baloo 2',cursive; font-weight:700; font-size:28px; color:#123a24; margin:0 0 4px; display:flex; align-items:center; gap:10px;"><span style="font-size:26px;">⭐</span>A few things that are always true</h2>
+      <p style="font-size:16.5px; color:#4e6157; margin:6px 0 18px;">No matter how old you get, these never change:</p>
+
+      <div style="display:grid; gap:12px;">
+        <div style="display:flex; gap:14px; background:#fff; border:2px solid #d8e6dc; border-radius:16px; padding:16px 18px;">
+          <span style="width:44px; height:44px; flex:none; border-radius:13px; background:#dff2e5; display:grid; place-items:center; font-size:22px;">🎣</span>
+          <p style="font-size:16px; line-height:1.55; color:#3a473f; margin:0;"><strong style="font-weight:800;">Nothing online is really free.</strong> If something shouts "FREE coins!", it's almost always a trick to steal your password or info. You're the scam detective — when you catch one, tell us. It's fun.</p>
+        </div>
+        <div style="display:flex; gap:14px; background:#fff; border:2px solid #d8e6dc; border-radius:16px; padding:16px 18px;">
+          <span style="width:44px; height:44px; flex:none; border-radius:13px; background:#e2f1f2; display:grid; place-items:center; font-size:22px;">🎭</span>
+          <p style="font-size:16px; line-height:1.55; color:#3a473f; margin:0;"><strong style="font-weight:800;">Some people online aren't who they say they are.</strong> Someone who says they're a kid your age might really be an adult pretending — the same way you wouldn't walk off with a stranger at the park.</p>
+        </div>
+        <div style="background:#fff; border:2px solid #f2d59a; border-radius:16px; padding:16px 18px;">
+          <div style="display:flex; gap:14px; align-items:flex-start;">
+            <span style="width:44px; height:44px; flex:none; border-radius:13px; background:#fdeecb; display:grid; place-items:center; font-size:22px;">🚩</span>
+            <p style="font-size:16px; line-height:1.55; color:#3a473f; margin:0;"><strong style="font-weight:800;">Learn the four warning signs.</strong> Be on the lookout if someone online:</p>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:12px 0 0;">
+            <div style="background:#fff9ec; border:1.5px solid #f0dcae; border-radius:11px; padding:9px 12px; font-size:14.5px; font-weight:700; color:#7a5a1a;">🎁 offers gifts or free stuff</div>
+            <div style="background:#fff9ec; border:1.5px solid #f0dcae; border-radius:11px; padding:9px 12px; font-size:14.5px; font-weight:700; color:#7a5a1a;">💬 super nice, super fast</div>
+            <div style="background:#fff9ec; border:1.5px solid #f0dcae; border-radius:11px; padding:9px 12px; font-size:14.5px; font-weight:700; color:#7a5a1a;">🤫 asks you to keep a secret</div>
+            <div style="background:#fff9ec; border:1.5px solid #f0dcae; border-radius:11px; padding:9px 12px; font-size:14.5px; font-weight:700; color:#7a5a1a;">📱 "let's chat somewhere private"</div>
+          </div>
+          <p style="font-size:15px; line-height:1.55; color:#3a473f; margin:12px 0 0;">Any <strong style="font-weight:800;">one</strong> of those = stop, and come show us. You're not in trouble — you're being smart. And remember: a <strong>surprise</strong> is something everyone learns about eventually; a <strong>secret</strong> stays hidden. We don't keep secrets from each other.</p>
+        </div>
+        <div style="display:flex; gap:14px; background:#fff; border:2px solid #d8e6dc; border-radius:16px; padding:16px 18px;">
+          <span style="width:44px; height:44px; flex:none; border-radius:13px; background:#dff2e5; display:grid; place-items:center; font-size:22px;">🛡️</span>
+          <p style="font-size:16px; line-height:1.55; color:#3a473f; margin:0;"><strong style="font-weight:800;">Your body is private.</strong> If anyone ever asks for pictures of your body, stop, don't answer, and come tell us right away — even if it's someone you know. No matter who it's from, you will never, ever be in trouble for telling us.</p>
+        </div>
+        <div style="display:flex; gap:14px; background:#fff; border:2px solid #d8e6dc; border-radius:16px; padding:16px 18px;">
+          <span style="width:44px; height:44px; flex:none; border-radius:13px; background:#e2f1f2; display:grid; place-items:center; font-size:22px;">🙈</span>
+          <p style="font-size:16px; line-height:1.55; color:#3a473f; margin:0;"><strong style="font-weight:800;">If you see grown-up stuff, close it and tell us.</strong> Sometimes you might bump into something made for adults, or something that feels yucky. It's not your fault. Just close it and come tell us — this happens to almost everybody.</p>
+        </div>
+        <div style="display:flex; gap:12px;">
+          <div style="flex:1; display:flex; gap:12px; background:#fff; border:2px solid #d8e6dc; border-radius:16px; padding:15px 16px; align-items:center;">
+            <span style="width:40px; height:40px; flex:none; border-radius:12px; background:#dff2e5; display:grid; place-items:center; font-size:20px;">🔒</span>
+            <p style="font-size:15px; line-height:1.5; color:#3a473f; margin:0;"><strong style="font-weight:800;">Passwords are secrets</strong> — even from your best friend.</p>
+          </div>
+          <div style="flex:1; display:flex; gap:12px; background:#fff; border:2px solid #d8e6dc; border-radius:16px; padding:15px 16px; align-items:center;">
+            <span style="width:40px; height:40px; flex:none; border-radius:12px; background:#e6e2f2; display:grid; place-items:center; font-size:20px;">😴</span>
+            <p style="font-size:15px; line-height:1.5; color:#3a473f; margin:0;"><strong style="font-weight:800;">Screens sleep outside your room</strong> — sleep is when your brain grows.</p>
+          </div>
+        </div>
+        <div style="display:flex; gap:14px; background:#eafbef; border:2px solid #bfe6cd; border-radius:16px; padding:16px 18px;">
+          <span style="width:44px; height:44px; flex:none; border-radius:13px; background:#c9edd6; display:grid; place-items:center; font-size:22px;">💚</span>
+          <p style="font-size:16px; line-height:1.55; color:#3a473f; margin:0;"><strong style="font-weight:800;">Our values don't have an off switch.</strong> When the guardrails come off, it's because we trust you — not because "anything goes." Some corners of the internet are built on hate. We don't spend time there — not because a filter blocks it, but because that's not who we are.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== THE ROADMAP (level track) ===== -->
+    <div style="margin:44px 0 0;">
+      <h2 style="font-family:'Baloo 2',cursive; font-weight:700; font-size:28px; color:#123a24; margin:0 0 4px; display:flex; align-items:center; gap:10px;"><span style="font-size:26px;">🗺️</span>The roadmap: what you unlock, year by year</h2>
+      <p style="font-size:16.5px; line-height:1.6; color:#4e6157; margin:6px 0 4px;">Here's the whole map so you can see what's coming. Each year unlocks something new — and each year some rules come <em>off</em>, because you've shown you can handle more.</p>
+      <p style="font-size:15.5px; line-height:1.55; color:#4e6157; margin:8px 0 24px; background:#eef7f0; border-radius:12px; padding:12px 16px;">💡 The grades and ages are a <strong style="font-weight:800;">guide, not a deadline.</strong> What really unlocks the next stage is the <strong style="font-weight:800;">"You'll get good at"</strong> part. Show us you've got those skills, and you're ready to level up.</p>
+
+      <!-- track -->
+      <div style="position:relative;">
+        <div style="position:absolute; left:27px; top:20px; bottom:20px; width:4px; border-radius:2px; background:repeating-linear-gradient(#cfe4d6 0 10px, transparent 10px 20px);"></div>
+
+        <!-- G4 NOW -->
+        <div style="position:relative; padding-left:74px; margin-bottom:18px;">
+          <span style="position:absolute; left:0; top:6px; width:56px; height:56px; border-radius:18px; background:#1f8a4c; color:#fff; display:grid; place-items:center; font-family:'Baloo 2',cursive; font-weight:800; font-size:24px; box-shadow:0 6px 16px -6px rgba(31,138,76,0.7); border:3px solid #fff;">4</span>
+          <div style="background:#fff; border:3px solid #1f8a4c; border-radius:20px; padding:18px 20px; box-shadow:0 10px 26px -16px rgba(31,138,76,0.6);">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px;">
+              <span style="font-family:'Baloo 2',cursive; font-weight:700; font-size:14px; color:#1f8a4c;">GRADE 4 · AGE 9</span>
+              <span style="font-size:11px; font-weight:800; color:#fff; background:#f0a83c; padding:3px 10px; border-radius:999px; letter-spacing:0.03em;">📍 YOU ARE HERE</span>
+            </div>
+            <h3 style="font-family:'Baloo 2',cursive; font-weight:700; font-size:21px; color:#123a24; margin:0 0 12px;">"Finding your balance, together"</h3>
+            <p style="font-size:15.5px; line-height:1.55; color:#3a473f; margin:0 0 7px;"><strong style="font-weight:800; color:#1f8a4c;">You get:</strong> websites we approve together, and playing Minecraft or similar games — on your own, with us, or with friends you know from real life (chat off or set to just those friends), plus picking shows to watch together.</p>
+            <p style="font-size:15.5px; line-height:1.55; color:#3a473f; margin:0 0 7px;"><strong style="font-weight:800; color:#9a8250;">Coming later:</strong> searching on your own, chatting online, social apps.</p>
+            <p style="font-size:15.5px; line-height:1.55; color:#3a473f; margin:0;"><strong style="font-weight:800; color:#127a8a;">You'll get good at:</strong> spotting scams ("free" = trap), keeping passwords secret, and the most important skill of all — <em>close it and tell us</em>.</p>
+            <details class="more" open style="margin-top:12px; border-top:1.5px solid #eef2ee; padding-top:10px;">
+              <summary style="cursor:pointer; font-family:'Baloo 2',cursive; font-weight:600; font-size:15px; color:#127a8a; display:inline-flex; align-items:center; gap:6px;"><span class="chev">▸</span>Tell me more</summary>
+              <div style="margin-top:8px; font-size:14.5px; line-height:1.6; color:#4a574f;">
+                <p style="margin:0 0 8px;"><strong style="font-weight:800;">The scam game.</strong> The biggest trick online is the word FREE. Real games never ask for your password on some other website to give you "free" coins. When you spot a "free stuff" offer, that's your cue to yell "SCAM!" and show us. We'll keep score.</p>
+                <p style="margin:0;"><strong style="font-weight:800;">Close it and tell us.</strong> If anything on a screen is scary, gross, or just weird — close it, walk away, come find us. Every single time you do that, you did it exactly right.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <!-- G5 -->
+        <div style="position:relative; padding-left:74px; margin-bottom:18px;">
+          <span style="position:absolute; left:2px; top:6px; width:52px; height:52px; border-radius:16px; background:#34a35f; color:#fff; display:grid; place-items:center; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; border:3px solid #fff; box-shadow:0 5px 14px -7px rgba(31,138,76,0.6);">5</span>
+          <div style="background:#fff; border:2px solid #d8e6dc; border-radius:18px; padding:16px 20px;">
+            <span style="font-family:'Baloo 2',cursive; font-weight:700; font-size:13px; color:#34a35f;">GRADE 5 · AGE 10</span>
+            <h3 style="font-family:'Baloo 2',cursive; font-weight:700; font-size:19px; color:#123a24; margin:2px 0 10px;">"Doing more on your own"</h3>
+            <p style="font-size:15px; line-height:1.5; color:#3a473f; margin:0 0 6px;"><strong style="font-weight:800; color:#1f8a4c;">You get:</strong> searching the web (with a safety net that blocks most of the bad stuff), and watching more videos on your own.</p>
+            <p style="font-size:15px; line-height:1.5; color:#3a473f; margin:0;"><strong style="font-weight:800; color:#127a8a;">You'll get good at:</strong> the "Break the Fake" trick for checking if something online is true, and spotting the four warning signs.</p>
+            <details class="more" style="margin-top:11px; border-top:1.5px solid #eef2ee; padding-top:9px;">
+              <summary style="cursor:pointer; font-family:'Baloo 2',cursive; font-weight:600; font-size:14.5px; color:#127a8a; display:inline-flex; align-items:center; gap:6px;"><span class="chev">▸</span>Tell me more</summary>
+              <div style="margin-top:8px; font-size:14.5px; line-height:1.6; color:#4a574f;">
+                <p style="margin:0 0 8px;"><strong style="font-weight:800;">What's "Break the Fake"?</strong> A four-step trick: (1) Who made this? (2) Find the original. (3) What do other places say? (4) Ask before you share. You "break the fake" just by slowing down.</p>
+                <p style="margin:0;"><strong style="font-weight:800;">The "safety net."</strong> Your searches pass through a filter like the bumpers in bumper-bowling. It's not there to watch you — it's there to catch the gutter balls while you're still learning to aim.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <!-- G6 -->
+        <div style="position:relative; padding-left:74px; margin-bottom:18px;">
+          <span style="position:absolute; left:2px; top:6px; width:52px; height:52px; border-radius:16px; background:#22a597; color:#fff; display:grid; place-items:center; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; border:3px solid #fff; box-shadow:0 5px 14px -7px rgba(18,122,138,0.6);">6</span>
+          <div style="background:#fff; border:2px solid #d8e6dc; border-radius:18px; padding:16px 20px;">
+            <span style="font-family:'Baloo 2',cursive; font-weight:700; font-size:13px; color:#12a39a;">GRADE 6 · AGE 11</span>
+            <h3 style="font-family:'Baloo 2',cursive; font-weight:700; font-size:19px; color:#123a24; margin:2px 0 10px;">"Talking to real people"</h3>
+            <p style="font-size:15px; line-height:1.5; color:#3a473f; margin:0 0 6px;"><strong style="font-weight:800; color:#1f8a4c;">You get:</strong> your own email, and texting with people we both know.</p>
+            <p style="font-size:15px; line-height:1.5; color:#3a473f; margin:0 0 6px;"><strong style="font-weight:800; color:#9a8250;">Still waiting:</strong> social media like TikTok, Instagram, and Snapchat — and we'll explain <em>why</em>, not just say no.</p>
+            <p style="font-size:15px; line-height:1.5; color:#3a473f; margin:0;"><strong style="font-weight:800; color:#127a8a;">You'll get good at:</strong> being a good person in group chats (screenshots travel!), and understanding why apps try so hard to keep you scrolling.</p>
+            <details class="more" style="margin-top:11px; border-top:1.5px solid #eef2ee; padding-top:9px;">
+              <summary style="cursor:pointer; font-family:'Baloo 2',cursive; font-weight:600; font-size:14.5px; color:#127a8a; display:inline-flex; align-items:center; gap:6px;"><span class="chev">▸</span>Tell me more</summary>
+              <div style="margin-top:8px; font-size:14.5px; line-height:1.6; color:#4a574f;">
+                <p style="margin:0 0 8px;"><strong style="font-weight:800;">Why wait on social media?</strong> These apps show you an endless feed picked by a computer whose only goal is to keep you staring. Even grown-ups struggle to put them down. We wait on purpose, and you'll get them later, one at a time.</p>
+                <p style="margin:0;"><strong style="font-weight:800;">Group-chat superpowers.</strong> Once you hit send, a screenshot can fly to the whole grade. Quick test: "Would I be okay if <em>everyone</em> saw this?" And be the kid brave enough to type "not cool" when a chat turns mean. Others will follow you.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <!-- G7 -->
+        <div style="position:relative; padding-left:74px; margin-bottom:18px;">
+          <span style="position:absolute; left:2px; top:6px; width:52px; height:52px; border-radius:16px; background:#12a39a; color:#fff; display:grid; place-items:center; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; border:3px solid #fff; box-shadow:0 5px 14px -7px rgba(18,122,138,0.6);">7</span>
+          <div style="background:#fff; border:2px solid #d8e6dc; border-radius:18px; padding:16px 20px;">
+            <span style="font-family:'Baloo 2',cursive; font-weight:700; font-size:13px; color:#12a39a;">GRADE 7 · AGE 12</span>
+            <h3 style="font-family:'Baloo 2',cursive; font-weight:700; font-size:19px; color:#123a24; margin:2px 0 10px;">"Leveling up your skills"</h3>
+            <p style="font-size:15px; line-height:1.5; color:#3a473f; margin:0 0 6px;"><strong style="font-weight:800; color:#1f8a4c;">The idea:</strong> this year your <em>skills</em> grow faster than your access — because skills are the thing that unlocks the next stuff.</p>
+            <p style="font-size:15px; line-height:1.5; color:#3a473f; margin:0;"><strong style="font-weight:800; color:#127a8a;">You'll get good at:</strong> noticing when someone's trying to trick or pressure you, and spotting videos built to make you angry on purpose (don't be their product).</p>
+            <details class="more" style="margin-top:11px; border-top:1.5px solid #eef2ee; padding-top:9px;">
+              <summary style="cursor:pointer; font-family:'Baloo 2',cursive; font-weight:600; font-size:14.5px; color:#127a8a; display:inline-flex; align-items:center; gap:6px;"><span class="chev">▸</span>Tell me more</summary>
+              <div style="margin-top:8px; font-size:14.5px; line-height:1.6; color:#4a574f;">
+                <p style="margin:0 0 8px;"><strong style="font-weight:800;">"You're being farmed."</strong> Some videos are designed to make you angry, jealous, or scared on purpose — because upset people keep watching, and the maker gets paid. When a video suddenly makes you mad, ask: "Who's making money off me being angry right now?" That question is a superpower.</p>
+                <p style="margin:0;"><strong style="font-weight:800;">Spotting pressure.</strong> Anyone who rushes you, guilt-trips you, or says "quick, don't tell your parents" is waving a giant red flag. Real friends never pressure you like that.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <!-- G8 -->
+        <div style="position:relative; padding-left:74px; margin-bottom:18px;">
+          <span style="position:absolute; left:2px; top:6px; width:52px; height:52px; border-radius:16px; background:#2f8fb3; color:#fff; display:grid; place-items:center; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; border:3px solid #fff; box-shadow:0 5px 14px -7px rgba(47,143,179,0.6);">8</span>
+          <div style="background:#fff; border:2px solid #d8e6dc; border-radius:18px; padding:16px 20px;">
+            <span style="font-family:'Baloo 2',cursive; font-weight:700; font-size:13px; color:#2f8fb3;">GRADE 8 · AGE 13</span>
+            <h3 style="font-family:'Baloo 2',cursive; font-weight:700; font-size:19px; color:#123a24; margin:2px 0 10px;">"Your first accounts"</h3>
+            <p style="font-size:15px; line-height:1.5; color:#3a473f; margin:0 0 6px;"><strong style="font-weight:800; color:#1f8a4c;">You get (if you're ready):</strong> your first smartphone by the end of this year — and <em>maybe</em> your first social app, with starter settings and us linked in.</p>
+            <p style="font-size:15px; line-height:1.5; color:#3a473f; margin:0;"><strong style="font-weight:800; color:#127a8a;">You'll get good at:</strong> steering your own video feed, and knowing that fake pictures ("deepfakes") exist — and that it's never your fault if someone else makes one.</p>
+            <details class="more" style="margin-top:11px; border-top:1.5px solid #eef2ee; padding-top:9px;">
+              <summary style="cursor:pointer; font-family:'Baloo 2',cursive; font-weight:600; font-size:14.5px; color:#127a8a; display:inline-flex; align-items:center; gap:6px;"><span class="chev">▸</span>Tell me more</summary>
+              <div style="margin-top:8px; font-size:14.5px; line-height:1.6; color:#4a574f;">
+                <p style="margin:0 0 8px;"><strong style="font-weight:800;">Why only one app?</strong> Because you get really good at one before adding the next — like leveling up in a game instead of starting on the hardest level. Beat level one, unlock level two.</p>
+                <p style="margin:0;"><strong style="font-weight:800;">Steering your feed.</strong> You're the boss of what you see. Tap "not interested" on junk, reset your history when the feed gets weird, and follow stuff that makes you feel good. Train it like a pet.</p>
+              </div>
+            </details>
+          </div>
+        </div>
+
+        <!-- G9 -->
+        <div style="position:relative; padding-left:74px; margin-bottom:18px;">
+          <span style="position:absolute; left:2px; top:6px; width:52px; height:52px; border-radius:16px; background:#5b83c4; color:#fff; display:grid; place-items:center; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; border:3px solid #fff; box-shadow:0 5px 14px -7px rgba(91,131,196,0.6);">9</span>
+          <div style="background:#fff; border:2px solid #d8e6dc; border-radius:18px; padding:16px 20px;">
+            <span style="font-family:'Baloo 2',cursive; font-weight:700; font-size:13px; color:#5b83c4;">GRADE 9 · AGE 14</span>
+            <h3 style="font-family:'Baloo 2',cursive; font-weight:700; font-size:19px; color:#123a24; margin:2px 0 10px;">"Trust, with check-ins"</h3>
+            <p style="font-size:15px; line-height:1.5; color:#3a473f; margin:0 0 6px;"><strong style="font-weight:800; color:#1f8a4c;">The rules start coming off — and you'll feel it:</strong> filters get lighter. You start setting your own time limits (we can see them, but <em>you</em> set them).</p>
+            <p style="font-size:15px; line-height:1.5; color:#3a473f; margin:0;"><strong style="font-weight:800; color:#127a8a;">You'll get good at:</strong> telling real life from the internet's polished, fake version, and spotting an online "friendship" that's actually sketchy.</p>
+          </div>
+        </div>
+
+        <!-- G10 -->
+        <div style="position:relative; padding-left:74px; margin-bottom:18px;">
+          <span style="position:absolute; left:2px; top:6px; width:52px; height:52px; border-radius:16px; background:#8a6fc0; color:#fff; display:grid; place-items:center; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; border:3px solid #fff; box-shadow:0 5px 14px -7px rgba(138,111,192,0.6);">10</span>
+          <div style="background:#fff; border:2px solid #d8e6dc; border-radius:18px; padding:16px 20px;">
+            <span style="font-family:'Baloo 2',cursive; font-weight:700; font-size:13px; color:#8a6fc0;">GRADE 10 · AGE 15</span>
+            <h3 style="font-family:'Baloo 2',cursive; font-weight:700; font-size:19px; color:#123a24; margin:2px 0 10px;">"We mostly step back"</h3>
+            <p style="font-size:15px; line-height:1.5; color:#3a473f; margin:0 0 6px;"><strong style="font-weight:800; color:#1f8a4c;">You get:</strong> an almost-open internet — and you become the family expert who helps a younger sibling through the tricky middle-school stuff.</p>
+            <p style="font-size:15px; line-height:1.5; color:#3a473f; margin:0;"><strong style="font-weight:800; color:#9a8250;">The big controls are gone by now.</strong> That was always the plan — but "almost-open" was never "anything goes." The filters come off; our family's values don't.</p>
+          </div>
+        </div>
+
+        <!-- G11 -->
+        <div style="position:relative; padding-left:74px; margin-bottom:18px;">
+          <span style="position:absolute; left:2px; top:6px; width:52px; height:52px; border-radius:16px; background:#c58a3c; color:#fff; display:grid; place-items:center; font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; border:3px solid #fff; box-shadow:0 5px 14px -7px rgba(197,138,60,0.6);">11</span>
+          <div style="background:#fff; border:2px solid #d8e6dc; border-radius:18px; padding:16px 20px;">
+            <span style="font-family:'Baloo 2',cursive; font-weight:700; font-size:13px; color:#c58a3c;">GRADE 11 · AGE 16</span>
+            <h3 style="font-family:'Baloo 2',cursive; font-weight:700; font-size:19px; color:#123a24; margin:2px 0 10px;">"We're your advisors now"</h3>
+            <p style="font-size:15px; line-height:1.5; color:#3a473f; margin:0;"><strong style="font-weight:800; color:#1f8a4c;">Basically the open internet.</strong> We keep only the same basic security stuff we use on our <em>own</em> devices. You make more of the calls, and we talk them through like adults.</p>
+          </div>
+        </div>
+
+        <!-- G12 FINISH -->
+        <div style="position:relative; padding-left:74px;">
+          <span style="position:absolute; left:2px; top:6px; width:52px; height:52px; border-radius:16px; background:linear-gradient(135deg,#f0a83c,#e0902a); color:#fff; display:grid; place-items:center; font-size:26px; border:3px solid #fff; box-shadow:0 6px 16px -6px rgba(224,144,42,0.8);">🎉</span>
+          <div style="background:linear-gradient(135deg,#fff7e6,#fdeecb); border:2.5px solid #ecb63f; border-radius:20px; padding:18px 22px;">
+            <span style="font-family:'Baloo 2',cursive; font-weight:700; font-size:13px; color:#c47f1f;">GRADE 12 · AGE 18</span>
+            <h3 style="font-family:'Baloo 2',cursive; font-weight:800; font-size:22px; color:#8a5a10; margin:2px 0 10px;">The handoff — everything is yours!</h3>
+            <p style="font-size:15.5px; line-height:1.55; color:#5a4a2a; margin:0;">All your accounts, all your passwords, no filters. You'll know how to protect your own accounts and even help your friends when something goes wrong for them. We'll even throw a little "graduation" — because that was the whole point.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== FINISH / SECRET ===== -->
+    <div style="margin:40px 0 0; background:#1f8a4c; border-radius:22px; padding:26px 26px; color:#fff; text-align:center;">
+      <p style="font-size:15px; font-weight:700; color:#bfe6cd; margin:0 0 10px; text-transform:uppercase; letter-spacing:0.06em; font-family:'Baloo 2',cursive;">The secret we'll tell you on that last day</p>
+      <p style="font-size:20px; line-height:1.5; font-weight:700; margin:0; font-family:'Baloo 2',cursive;">The filters were never really the point. <span style="color:#ffd66b;">You</span> were the thing we were building this whole time. And the one rule that never expires: <span style="color:#ffd66b;">call us first when something goes wrong.</span> That offer never runs out. 💛</p>
+    </div>
+
+    <div style="margin:26px 0 0; text-align:center;">
+      <h2 style="font-family:'Baloo 2',cursive; font-weight:700; font-size:24px; color:#123a24; margin:0 0 6px;">Questions? 🙋</h2>
+      <p style="font-size:16px; line-height:1.6; color:#4e6157; margin:0 auto; max-width:460px;">Ask us anything, anytime. There's no such thing as a dumb question about this stuff — even we have to look things up. We're on your team, all the way through.</p>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

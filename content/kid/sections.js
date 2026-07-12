@@ -100,136 +100,162 @@ const GRADES = {
   },
 };
 
+// Freedom-arc line labels map to three tints: what you gain (green), what's
+// still gated (tan), and the skills that unlock the next stage (teal).
+const lineClass = (label) =>
+  label === "You'll get good at" ? 'skill'
+    : label === 'Coming later' || label === 'Still waiting' || label === 'Most of the controls are gone by now' ? 'later'
+      : 'get';
+
 const gradeCard = (h, s) => {
   const g = GRADES[s.id];
-  const here = s.isCurrent ? '<span class="here">You are here</span>' : '';
+  const n = s.id.slice(1); // "4".."12"
+  const isFinish = s.id === 'g12';
+  const gradeLabel = `<span class="grade-label">${s.grade.toUpperCase()} · AGE ${s.age}</span>`;
+  const head = s.isCurrent
+    ? `<div class="head">${gradeLabel}<span class="here-pill">📍 YOU ARE HERE</span></div>`
+    : gradeLabel;
   const lines = g.lines
-    .map(([label, text]) => `<p class="line"><strong>${label}:</strong> ${text(h)}</p>`)
+    .map(([label, text]) => `<p><strong class="${lineClass(label)}">${label}:</strong> ${text(h)}</p>`)
     .join('\n');
-  const notes = g.notes
-    .map(([head, text]) => `<p><span class="mh">${head}</span> ${text}</p>`)
-    .join('\n');
+  const more = g.notes.length
+    ? `<details class="more"${s.isCurrent ? ' open' : ''}>
+        <summary><span class="chev" aria-hidden="true">▸</span>Tell me more</summary>
+        <div class="more-body">${g.notes
+          .map(([hd, txt]) => `<p><strong>${hd}</strong> ${txt}</p>`)
+          .join('\n')}</div>
+      </details>`
+    : '';
   return `
-    <div class="year${s.isCurrent ? ' now' : ''}">
-      <div class="year-head">
-        <span class="grade">${s.grade}</span>
-        <span class="tag">age ${s.age}</span>
-        ${here}
+    <div class="level${s.isCurrent ? ' now' : ''}${isFinish ? ' finish' : ''}" data-g="${n}">
+      <span class="node">${isFinish ? '🎉' : n}</span>
+      <div class="card">
+        ${head}
+        <h3>“${s.title}”</h3>
+        ${lines}
+        ${more}
       </div>
-      <h3>“${s.title}”</h3>
-      ${lines}
-      <details class="more-toggle"${s.isCurrent ? ' open' : ''}>
-        <summary class="more-sum"><span class="chev" aria-hidden="true">▸</span>Tell me more</summary>
-        <div class="more">${notes}</div>
-      </details>
     </div>`;
 };
 
 export default [
+  // hero + journey bar + greeting + big idea
   {
-    body: (h) => `
-      <h1>Your Internet Roadmap</h1>
-      <p class="sub">How you earn more freedom online — one year at a time.</p>
-      <p class="intro">${h.hasName ? `Hey ${h.name}!` : 'Hey!'} This is the plan for how you’ll use
+    body: (h) => {
+      const curAge = h.current ? h.current.age : h.cfg.age;
+      const pct = Math.max(0, Math.min(100, Math.round(((curAge - 9) / 9) * 100)));
+      return `
+      <div class="hero">
+        <span class="hero-pill">🚀 A plan just for you</span>
+        <h1>Your Internet<br>Roadmap</h1>
+        <p class="hero-sub">How you earn more freedom online — one year at a time.</p>
+      </div>
+
+      <div class="journey">
+        <div class="journey-track">
+          <div class="journey-here" style="left:${pct}%">🚲</div>
+          <div class="journey-end">🎉</div>
+        </div>
+        <div class="journey-labels">
+          <div class="start"><div class="big">Age ${curAge}</div><div class="small">YOU ARE HERE</div></div>
+          <div class="finish"><div class="big">Age 18</div><div class="small">ALL YOURS</div></div>
+        </div>
+      </div>
+
+      <p class="intro"><strong>${h.hasName ? `Hey ${h.name}!` : 'Hey!'}</strong> This is the plan for how you’ll use
         the internet as you grow up. You and your parents are a team on this, so you wrote it down
         together. Here’s the big idea:</p>
+
       <div class="big-idea">
-        <p><strong>Every single year, you get more freedom online — as long as you show
-           you’re ready for it.</strong></p>
+        <p class="lead">Every single year, you get more freedom online — as long as you show
+           you’re ready for it.</p>
         <p>It’s a little like learning to ride a bike. First we hold on. Then we let go but run
            right beside you. Then one day you ride off on your own. We are <em>not</em> going to
            hold on forever — we let go a little more every year, on a schedule you can see right here.</p>
         <p>The rules aren’t because we don’t trust you. They’re just our hand on the seat while you
            find your balance. And that hand always comes off.</p>
+      </div>`;
+    },
+  },
+
+  // promise
+  {
+    body: () => `
+      <div class="section">
+        <h2><span class="emoji">🤝</span>Our promise to you</h2>
+        <p class="section-intro">This is the most important part of the whole plan, so read it twice:</p>
+        <div class="promise">
+          <p class="lead">You will NEVER be in trouble for telling us something that happened online.
+             We will never take your devices away because someone else did something to you — even if
+             you broke a rule first.</p>
+          <p>If something online ever scares you, confuses you, or just makes you feel weird — you can
+             always come tell us. Always. We might feel a little worried, but we will <strong>never</strong>
+             be mad at you for telling the truth. Telling us is the right move every single time.</p>
+          <p><strong>Your promise back:</strong> when something feels off, close it and come find us.
+             That’s the whole job.</p>
+        </div>
       </div>`,
   },
 
+  // a few things that are always true
   {
     body: () => `
-      <h2>Our promise to you</h2>
-      <p>This is the most important part of the whole plan, so read it twice:</p>
-      <div class="promise">
-        <p class="pledge">You will NEVER be in trouble for telling us something that happened online.
-           We will never take your devices away because someone else did something to you — even if
-           you broke a rule first.</p>
-        <p>If something online ever scares you, confuses you, or just makes you feel weird — you can
-           always come tell us. Always. We might feel a little worried, but we will <strong>never</strong>
-           be mad at you for telling the truth. Telling us is the right move every single time.</p>
-        <p><strong>Your promise back:</strong> when something feels off, close it and come find us.
-           That’s the whole job.</p>
+      <div class="section">
+        <h2><span class="emoji">⭐</span>A few things that are always true</h2>
+        <p class="section-intro">No matter how old you get, these never change:</p>
+        <div class="rules">
+          <div class="rule"><span class="tile">🎣</span><p><strong>Nothing online is really free.</strong> If something shouts “FREE coins!” or “free skins!”, it’s almost always a trick to steal your password or your info. Real free things don’t make you log in or “verify” first. You’re the scam detective — when you catch one, tell us. It’s fun.</p></div>
+          <div class="rule"><span class="tile teal">🎭</span><p><strong>Some people online aren’t who they say they are.</strong> This is the grown-up version of stranger danger. Someone who says they’re a kid your age might really be an adult pretending. That’s why we’re careful about who you talk to online — the same way you wouldn’t walk off with a stranger at the park.</p></div>
+          <div class="rule warn-card">
+            <div class="rule-head"><span class="tile warn">🚩</span><p><strong>Learn the four warning signs.</strong> Be on the lookout if someone online:</p></div>
+            <div class="warn-grid">
+              <div class="warn-chip">🎁 offers you gifts or free stuff,</div>
+              <div class="warn-chip">💬 says super nice things really fast (“you’re so cool / so mature!”),</div>
+              <div class="warn-chip">🤫 asks you to keep a secret from your parents, or</div>
+              <div class="warn-chip">📱 asks you to move somewhere private to chat (a different app, or DMs).</div>
+            </div>
+            <p class="warn-note">Any <strong>one</strong> of those = stop, and come show us. You’re not in trouble — you’re being smart. <strong>Know the difference between surprises and secrets.</strong> A surprise is something everyone learns about eventually. A secret stays hidden. In our house, we do not keep secrets from each other. If someone asks you to keep a secret, tell them you don’t keep secrets — and tell <em>us</em> that someone asked.</p>
+          </div>
+          <div class="rule"><span class="tile">🛡️</span><p><strong>Your body is private.</strong> If anyone ever asks for pictures of your body, or asks you to do something on camera, stop, don’t answer, and come tell us right away. This is true even when the person is someone you <em>know</em> — a kid from school, a teammate, a friend. Sometimes a person who is being tricked gets pushed into asking other kids, so a message can look like it’s from a friend and still be a trap. No matter who it’s from, you will never, ever be in trouble for telling us. We’ll sort it out together.</p></div>
+          <div class="rule"><span class="tile teal">🙈</span><p><strong>If you see grown-up stuff, close it and tell us.</strong> Sometimes you might bump into a video or picture that’s really made for adults, or something that just makes you feel yucky. It’s not your fault and you’re not in trouble. Just close it and come tell us — this happens to almost everybody at some point, so we won’t be shocked.</p></div>
+          <div class="rule-pair">
+            <div class="rule"><span class="tile">🔒</span><p><strong>Passwords are secrets</strong> — even from your best friend. We’ll keep yours written down somewhere safe.</p></div>
+            <div class="rule"><span class="tile purple">😴</span><p><strong>Screens live in the common areas and sleep charging outside your bedroom.</strong> Not a punishment! Screens are just really sneaky at stealing sleep, and sleep is when your brain does its growing.</p></div>
+          </div>
+          <div class="rule values"><span class="tile mint">💚</span><p><strong>Our values don’t have an off switch.</strong> As you get older, we take the filters and locks off — because we trust you, not because “anything goes.” Some corners of the internet are built on hate: places made to attack people for their race, their religion, or who they are. We don’t spend time there — not because a filter blocks it, but because that’s not who we are. When the guardrails come off, that part stays on.</p></div>
+        </div>
       </div>`,
   },
 
-  {
-    body: () => `
-      <h2>A few things that are always true</h2>
-      <p>No matter how old you get, these never change:</p>
-      <ul class="rules">
-        <li><strong>Nothing online is really free.</strong> If something shouts “FREE coins!” or
-          “free skins!”, it’s almost always a trick to steal your password or your info. Real free
-          things don’t make you log in or “verify” first. You’re the scam detective — when you catch
-          one, tell us. It’s fun.</li>
-        <li><strong>Some people online aren’t who they say they are.</strong> This is the grown-up
-          version of stranger danger. Someone who says they’re a kid your age might really be an adult
-          pretending. That’s why we’re careful about who you talk to online — the same way you
-          wouldn’t walk off with a stranger at the park.</li>
-        <li><strong>Learn the four warning signs.</strong> Be on the lookout if someone online:
-          <ul class="warn-signs">
-            <li>offers you gifts or free stuff,</li>
-            <li>says super nice things really fast (“you’re so cool / so mature!”),</li>
-            <li>asks you to keep a secret from your parents, or</li>
-            <li>asks you to move somewhere private to chat (a different app, or DMs).</li>
-          </ul>
-          Any <strong>one</strong> of those = stop, and come show us. You’re not in trouble — you’re
-          being smart. <strong>Know the difference between surprises and secrets.</strong> A surprise
-          is something everyone learns about eventually. A secret stays hidden. In our house, we do
-          not keep secrets from each other. If someone asks you to keep a secret, tell them you don’t
-          keep secrets — and tell <em>us</em> that someone asked.</li>
-        <li><strong>Your body is private.</strong> If anyone ever asks for pictures of your body, or
-          asks you to do something on camera, stop, don’t answer, and come tell us right away. This is
-          true even when the person is someone you <em>know</em> — a kid from school, a teammate, a
-          friend. Sometimes a person who is being tricked gets pushed into asking other kids, so a
-          message can look like it’s from a friend and still be a trap. No matter who it’s from, you
-          will never, ever be in trouble for telling us. We’ll sort it out together.</li>
-        <li><strong>If you see grown-up stuff, close it and tell us.</strong> Sometimes you might bump
-          into a video or picture that’s really made for adults, or something that just makes you feel
-          yucky. It’s not your fault and you’re not in trouble. Just close it and come tell us — this
-          happens to almost everybody at some point, so we won’t be shocked.</li>
-        <li><strong>Passwords are secrets</strong> — even from your best friend. We’ll keep yours
-          written down somewhere safe.</li>
-        <li><strong>Screens live in the common areas and sleep charging outside your bedroom.</strong>
-          Not a punishment! Screens are just really sneaky at stealing sleep, and sleep is when your
-          brain does its growing.</li>
-        <li><strong>Our values don’t have an off switch.</strong> As you get older, we take the
-          filters and locks off — because we trust you, not because “anything goes.” Some corners of
-          the internet are built on hate: places made to attack people for their race, their religion,
-          or who they are. We don’t spend time there — not because a filter blocks it, but because
-          that’s not who we are. When the guardrails come off, that part stays on.</li>
-      </ul>`,
-  },
-
+  // the roadmap
   {
     body: (h) => `
-      <hr />
-      <h2>The roadmap: what you unlock, year by year</h2>
-      <p>Here’s the whole map so you can see what’s coming. Each year unlocks something new — and each
-         year some rules come <em>off</em>, because you’ve shown you can handle more.</p>
-      <p>One important thing: the grades and ages here are a <em>guide</em>, not a deadline. What
-         really unlocks the next stage isn’t your birthday — it’s the <strong>“You’ll get good at”</strong>
-         part. When you show us you’ve gotten good at those skills, you’re ready to move up.</p>
-      ${h.stages.map((s) => gradeCard(h, s)).join('\n')}`,
+      <div class="section">
+        <h2><span class="emoji">🗺️</span>The roadmap: what you unlock, year by year</h2>
+        <p class="section-intro">Here’s the whole map so you can see what’s coming. Each year unlocks something new — and each
+           year some rules come <em>off</em>, because you’ve shown you can handle more.</p>
+        <p class="section-tip">💡 One important thing: the grades and ages here are a <em>guide</em>, not a deadline. What
+           really unlocks the next stage isn’t your birthday — it’s the <strong>“You’ll get good at”</strong>
+           part. When you show us you’ve gotten good at those skills, you’re ready to move up.</p>
+        <div class="track">
+          ${h.stages.map((s) => gradeCard(h, s)).join('\n')}
+        </div>
+      </div>`,
   },
 
+  // the secret + questions
   {
     body: () => `
-      <div class="finish">
-        <p>Here’s the secret we’ll tell you on that last day:</p>
-        <p class="secret">The filters were never really the point. <strong>You</strong> were the thing
-           we were building this whole time. And the one rule that never expires: call us first when
-           something goes wrong. That offer never runs out.</p>
+      <div class="secret">
+        <p class="label">Here’s the secret we’ll tell you on that last day:</p>
+        <p class="big">The filters were never really the point. <span class="hl">You</span> were the thing
+           we were building this whole time. And the one rule that never expires: <span class="hl">call us first when
+           something goes wrong.</span> That offer never runs out.</p>
       </div>
-      <h2>Questions?</h2>
-      <p>Ask us anything, anytime. There is no such thing as a dumb question about this stuff — even we
-         have to look things up. We’re on your team, all the way through.</p>`,
+      <div class="questions">
+        <h2>Questions? 🙋</h2>
+        <p>Ask us anything, anytime. There is no such thing as a dumb question about this stuff — even we
+           have to look things up. We’re on your team, all the way through.</p>
+      </div>`,
   },
 ];
