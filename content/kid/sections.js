@@ -144,6 +144,7 @@ export default [
     body: (h) => {
       const curAge = h.current ? h.current.age : h.cfg.age;
       const pct = Math.max(0, Math.min(100, Math.round(((curAge - 9) / 9) * 100)));
+      const flagShift = pct <= 12 ? '0%' : pct >= 88 ? '-100%' : '-50%';
       return `
       <div class="hero">
         <span class="hero-pill">🚀 A plan just for you</span>
@@ -156,8 +157,11 @@ export default [
           <div class="journey-here" style="left:${pct}%">🚲</div>
           <div class="journey-end">🎉</div>
         </div>
+        <div class="journey-now">
+          <span class="journey-flag" style="left:${pct}%; transform: translateX(${flagShift})"><span class="here">You are here</span><span class="hereage">Age ${curAge}</span></span>
+        </div>
         <div class="journey-labels">
-          <div class="start"><div class="big">Age ${curAge}</div><div class="small">YOU ARE HERE</div></div>
+          <div class="start"><div class="big">Age 9</div><div class="small">The start</div></div>
           <div class="finish"><div class="big">Age 18</div><div class="small">ALL YOURS</div></div>
         </div>
       </div>
