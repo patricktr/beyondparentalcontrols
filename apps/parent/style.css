@@ -235,6 +235,11 @@ sup.fn-ref a { padding: 0 1px; }
 /* ===== PLAN page ========================================================= */
 .doc-meta { color: var(--muted); font-size: 15px; }
 .config-summary { color: var(--accent); }
+/* section rhythm on the generated plan: space each top-level section kicker
+   (the flat #doc fragments have no .section wrapper). Nested eyebrows (preview,
+   share) and the first kicker are excluded. */
+#doc > .eyebrow { margin-top: 52px; }
+#doc > .eyebrow:first-child { margin-top: 0; }
 h1.doc-title { font-size: 40px; }
 h2.research-h2 { font-size: 26px; }
 
