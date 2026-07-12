@@ -222,7 +222,14 @@ export default [
       <p><strong>For:</strong> ${h.platforms.map((p) => p.name).join(' + ')} household, ${h.kid} at age ${h.cfg.age}${h.schoolDevice ? ', a school-issued device that comes home' : ''}. Younger siblings age into each stage.
         <strong>Goal:</strong> locked-down → full autonomy by 18, on a deliberate schedule instead of by attrition.
         <strong>Built from:</strong> ~70 sources including peer-reviewed research, NCMEC/FBI data, and
-        AAP/APA/eSafety guidance (footnotes at the end).</p>`,
+        AAP/APA/eSafety guidance (footnotes at the end).</p>
+      <div class="top-share">
+        <span class="top-share-label">🔗 <strong>Send this to your kid</strong> — the safe version</span>
+        <div class="share-row">
+          <input class="js-kidlink" readonly aria-label="Kid link">
+          <button class="js-kidcopy" type="button">Copy</button>
+        </div>
+      </div>`,
   },
 
   {

@@ -17,8 +17,8 @@
     <h2>Send this to your kid</h2>
     <p>A safe, kid-facing version of this plan — nothing candid. This is the link to give them.</p>
     <div class="share-row">
-      <input id="kidlink" readonly aria-label="Kid link">
-      <button id="copy" type="button">Copy</button>
+      <input id="kidlink" class="js-kidlink" readonly aria-label="Kid link">
+      <button id="copy" class="js-kidcopy" type="button">Copy</button>
     </div>
   </aside>
 </div>
@@ -47,17 +47,19 @@
   kid.set('approach', cfg.approach);
   const kidUrl = `${KID_ORIGIN}?${kid.toString()}`;
 
-  const link = document.getElementById('kidlink');
-  link.value = kidUrl;
-  const btn = document.getElementById('copy');
-  btn.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(kidUrl);
-      btn.textContent = 'Copied ✓';
-      setTimeout(() => (btn.textContent = 'Copy'), 1500);
-    } catch {
-      link.select();
-    }
+  // Populate + wire every kid-link control (the top-of-plan bar and the bottom card).
+  document.querySelectorAll('.js-kidlink').forEach((el) => { el.value = kidUrl; });
+  document.querySelectorAll('.js-kidcopy').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(kidUrl);
+        const orig = btn.textContent;
+        btn.textContent = 'Copied ✓';
+        setTimeout(() => { btn.textContent = orig; }, 1500);
+      } catch {
+        btn.closest('.share-row')?.querySelector('.js-kidlink')?.select();
+      }
+    });
   });
 </script>
 </body>
