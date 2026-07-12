@@ -91,18 +91,12 @@
     </label>
 
     <fieldset>
-      <legend>This roadmap is for a…<span class="help" tabindex="0" role="button" aria-label="Why we ask about this">?<span class="tip" role="tooltip">The online risks that hit hardest differ by sex and identity — financial sextortion and “manosphere” content skew toward boys; coercion, image-based abuse and body-image pressure toward girls; LGBTQ+ kids face extra targeting and outing-based coercion (and for them online community is often a lifeline, so blunt bans backfire). We use it to flag <em>which risks to prioritize</em> and to get pronouns right — it changes emphasis, not the roadmap. Pick “neutral” to see every pattern.</span></span></legend>
+      <legend>This roadmap is for a…<span class="help" tabindex="0" role="button" aria-label="Why we ask about this">?<span class="tip" role="tooltip">The online risks that hit hardest differ by sex and identity — financial sextortion and “manosphere” content skew toward boys; coercion, image-based abuse and body-image pressure toward girls; LGBTQ+ kids face extra targeting and outing-based coercion (and for them online community is often a lifeline, so blunt bans backfire). We use it to flag <em>which risks to prioritize</em> — it changes emphasis, not the roadmap. Pick “neutral” to see every pattern.</span></span></legend>
       <div class="pills">
         <label><input type="radio" name="for" value="boy"> boy</label>
         <label><input type="radio" name="for" value="girl"> girl</label>
         <label><input type="radio" name="for" value="lgbtq"> LGBTQ+</label>
-        <label><input type="radio" name="for" value="neutral" checked> neutral <span class="muted-note">(they/them)</span></label>
-      </div>
-      <div class="pills" id="pronoun-picker" hidden>
-        <span class="picker-label">Pronouns for the plan</span>
-        <label><input type="radio" name="pro" value="he" disabled> he/him</label>
-        <label><input type="radio" name="pro" value="she" disabled> she/her</label>
-        <label><input type="radio" name="pro" value="they" checked disabled> they/them</label>
+        <label><input type="radio" name="for" value="neutral" checked> neutral</label>
       </div>
     </fieldset>
 
@@ -134,22 +128,5 @@
 
   <p class="foot">No cookies · Anonymous analytics · noindex · Renders in your browser</p>
 </div>
-<script>
-  // Show the pronoun picker only for LGBTQ+ (an LGBTQ+ kid may use any pronouns);
-  // disabling its inputs otherwise keeps `pro` out of the URL for the other options.
-  (function () {
-    var picker = document.getElementById('pronoun-picker');
-    var pros = picker.querySelectorAll('input');
-    function sync() {
-      var on = document.querySelector('input[name="for"]:checked').value === 'lgbtq';
-      picker.hidden = !on;
-      pros.forEach(function (i) { i.disabled = !on; });
-    }
-    document.querySelectorAll('input[name="for"]').forEach(function (r) {
-      r.addEventListener('change', sync);
-    });
-    sync();
-  })();
-</script>
 </body>
 </html>

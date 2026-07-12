@@ -13,15 +13,15 @@ The plan is an ordered list of **sections**. Each section declares:
   kid bundle.
 - `when` (optional): a predicate over the config, e.g. only show the
   "school-managed device" section when `school_device` is true.
-- `body`: content that may itself branch on the config — pronouns, the
-  platform's setup steps, the age-shifted timeline, gender risk-emphasis.
+- `body`: content that may itself branch on the config — the platform's setup
+  steps, the age-shifted timeline, gender risk-emphasis.
 
 ## Knobs (see ../README.md for the schema)
 
 - **age** → computes the "you are here" marker; nothing is authored per age.
 - **approach** → an offset applied to milestone ages; same finish line (18).
 - **platform** → selects a setup fragment (`fragments/platform/{apple,google}`).
-- **for** (gender) → pronoun set + optional risk-emphasis callouts. Not a fork.
+- **for** (gender) → risk-emphasis callouts. Not a fork.
 
 ## Rule of thumb
 

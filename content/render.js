@@ -9,15 +9,6 @@ export const esc = (s) =>
   String(s).replace(/[&<>"']/g, (c) =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-// subj/obj/possessive per pronoun set. `they` is singular they, which needs plural
-// verb agreement — handled by the be/have/s helpers below. cfg.pronouns selects the
-// set (boy→he, girl→she, neutral→they; lgbtq is parent-chosen). See config.js.
-const PRONOUNS = {
-  he:   { subj: 'he',   obj: 'him',  pos: 'his',   posp: 'his',    refl: 'himself' },
-  she:  { subj: 'she',  obj: 'her',  pos: 'her',   posp: 'hers',   refl: 'herself' },
-  they: { subj: 'they', obj: 'them', pos: 'their', posp: 'theirs', refl: 'themselves' },
-};
-
 // Grade→age schedule with a pace offset: "you are here" = the latest grade the
 // child's approach-shifted age has reached (cautious sits ~a year back, open ~a
 // year ahead, balanced raw). Before the first reached grade → nothing current.
@@ -30,8 +21,6 @@ function stagesFor(cfg) {
 
 export function helpers(cfg) {
   const stages = stagesFor(cfg);
-  const pr = PRONOUNS[cfg.pronouns] || PRONOUNS.they;
-  const plural = cfg.pronouns === 'they';
   const name = cfg.child ? esc(cfg.child) : ''; // pre-escaped: the only untrusted string
 
   // Footnotes. cite(src) emits a superscript ref and registers the source;
@@ -67,15 +56,6 @@ export function helpers(cfg) {
     footnotes,
     hasName: Boolean(name),
     kid: name || 'your kid', // parent-side fallback
-
-    // pronouns + conjugation (so "they wants" never happens)
-    they: pr.subj, them: pr.obj, their: pr.pos, theirs: pr.posp, themself: pr.refl,
-    be: plural ? 'are' : 'is',
-    beC: plural ? '’re' : '’s',   // be-contraction: "he’s at" / "they’re at"
-    have: plural ? 'have' : 'has',
-    haveC: plural ? '’ve' : '’s', // have-contraction: "he’s done" / "they’ve done"
-    s: (verb) => (plural ? verb : verb + 's'), // "want" → "wants"
-    Cap: (w) => w.charAt(0).toUpperCase() + w.slice(1),
 
     platforms: cfg.platforms.map((id) => ({ id, ...PLATFORMS[id] })),
     platform: { id: cfg.platforms[0], ...PLATFORMS[cfg.platforms[0]] }, // primary

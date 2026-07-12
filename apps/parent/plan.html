@@ -33,7 +33,6 @@
   if (cfg.child) kid.set('child', cfg.child);
   kid.set('age', cfg.age);
   kid.set('for', cfg.gender);
-  if (cfg.gender === 'lgbtq') kid.set('pro', cfg.pronouns);
   cfg.platforms.forEach((p) => kid.append('platform', p));
   kid.set('approach', cfg.approach);
   const kidUrl = `${KID_ORIGIN}?${kid.toString()}`;

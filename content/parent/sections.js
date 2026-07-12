@@ -215,7 +215,7 @@ const gradeBlock = (h, s) => {
 export default [
   {
     body: (h) => `
-      <p class="eyebrow config-summary">Parents' edition · ${h.platforms.map((p) => p.name).join(' + ')} · ${h.approach.label} · ${h.they}/${h.them} · age ${h.cfg.age}</p>
+      <p class="eyebrow config-summary">Parents' edition · ${h.platforms.map((p) => p.name).join(' + ')} · ${h.approach.label} · age ${h.cfg.age}</p>
       <h1 class="doc-title">Graduated Internet Access Plan</h1>
       <p class="doc-meta"><strong>Parents' edition.</strong> The full, candid plan. A kid-facing
         version lives on the kid site, safe to hand over.</p>
