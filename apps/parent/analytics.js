@@ -1,6 +1,7 @@
 // Privacy-first analytics for the PARENT site only (the kid site loads nothing).
 //
-// What we collect: anonymous $pageview events with browser + coarse geo. That's it.
+// What we collect: anonymous $pageview + $pageleave events (the pair lets us measure
+// time-on-page) with browser + coarse geo. That's it.
 // What we deliberately DON'T do:
 //   - persistence: 'memory'  -> no cookies, no localStorage (cookieless). Trade-off:
 //     no cross-visit id, so unique-visitor counts run a little high.
@@ -30,7 +31,7 @@ posthog.init("phc_rkicGKj4tXJhH29d3FtCe2nu7CkRhcWfXGaLLMc6y77o", {
   persistence: "memory",
   autocapture: false,
   capture_pageview: true,
-  capture_pageleave: false,
+  capture_pageleave: true, // paired with $pageview to measure time-on-page; same before_send scrubbing applies
   disable_session_recording: true,
   disable_surveys: true,
   person_profiles: "never",
