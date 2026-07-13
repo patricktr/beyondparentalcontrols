@@ -1,7 +1,9 @@
 // Privacy-first analytics for the PARENT site only (the kid site loads nothing).
 //
 // What we collect: anonymous $pageview + $pageleave events (the pair lets us measure
-// time-on-page) with browser + coarse geo. That's it.
+// time-on-page) with browser + coarse geo, plus a max_scroll_pct super-property (how far
+// down the page the visitor scrolled, 0-100). That's it. We measure scroll ourselves
+// (see bottom) rather than enable PostHog's autocapture, which would also capture clicks.
 // What we deliberately DON'T do:
 //   - persistence: 'memory'  -> no cookies, no localStorage (cookieless). Trade-off:
 //     no cross-visit id, so unique-visitor counts run a little high.
@@ -55,3 +57,30 @@ posthog.init("phc_rkicGKj4tXJhH29d3FtCe2nu7CkRhcWfXGaLLMc6y77o", {
     return event;
   },
 });
+
+// Scroll depth, the anonymous way. PostHog's built-in scroll depth only ships when
+// autocapture is on — which would also start capturing clicks/inputs, exactly what we
+// keep off. So we measure it ourselves: track the deepest point of the page the visitor
+// reached (0–100, "how far down did they read") and expose it as a super-property that
+// rides along on $pageview/$pageleave. It's just a number — no cookies (persistence is
+// memory-only), no autocapture, and it passes through the same before_send scrubber above.
+(function () {
+  var maxPct = 0;
+  function measure() {
+    var doc = document.documentElement;
+    var viewport = window.innerHeight || doc.clientHeight || 0;
+    var full = Math.max(doc.scrollHeight, document.body ? document.body.scrollHeight : 0);
+    if (!full || !viewport) return;
+    var seen = (window.scrollY || doc.scrollTop || 0) + viewport;
+    var pct = Math.max(0, Math.min(100, Math.round((seen / full) * 100)));
+    if (pct > maxPct) {
+      maxPct = pct;
+      posthog.register({ max_scroll_pct: maxPct });
+    }
+  }
+  window.addEventListener("scroll", measure, { passive: true });
+  window.addEventListener("resize", measure, { passive: true });
+  // Initial read so short pages (fully visible without scrolling) report 100%.
+  if (document.readyState === "loading") window.addEventListener("DOMContentLoaded", measure);
+  else measure();
+})();
