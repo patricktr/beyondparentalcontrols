@@ -103,7 +103,7 @@ const GRADES = {
     lockedLabel: 'Steps down',
     locked: ['Web filter narrows to porn/malware/scam categories only', 'App-by-app time limits → replaced by their self-set limits (you can see them; they set them)', 'Bark-class alerting, if you ever used it, sunsets by agreement', 'Contact approval relaxes'],
     teach: [
-      '<strong>Porn realism v2</strong> (they’ve almost certainly seen it — 73% by 17): a media-literacy lesson, not a morality one. “Porn is choreography, not documentation” — scripted, edited, skewed. What it teaches about consent and bodies is wrong the way action movies are wrong about driving. Short; repeated; the AAP note that authoritarian shaming <em>increases</em> use is worth remembering.',
+      '<strong>Porn realism v2</strong> (they’ve almost certainly seen it — 73% by 17): a media-literacy lesson, not a morality one. “Porn is choreography, not documentation” — scripted, edited, skewed. What it teaches about consent and bodies is wrong the way action movies are wrong about driving. Short; repeated; the AAP’s point — that shaming, authoritarian approaches are linked to kids <em>intentionally seeking out more</em> porn, not less — is worth remembering.',
       'Online relationship red flags they can self-diagnose: intensity, isolation, secrecy, age gaps, “don’t tell your parents” — the same four tells from grade 5, now applied to romance.',
       'Money: crypto scams, sports-betting funnels aimed at teens, account-theft resale economics.',
       'They run their own privacy-settings audit on every platform and walk YOU through it (teaching = retention).',
@@ -150,7 +150,7 @@ const DEVICE_LAYER = {
     '<strong>Reliability warning:</strong> Screen Time has a long history of silently failing — treat it as <em>policy signal, not enforcement</em>; the network layer is your backstop.',
   ],
   google: [
-    'Install the <strong>Family Link</strong> app (yours) and sign a <strong>supervised child Google Account</strong> (true birthdate) into the device. Full supervision works on <strong>Android 6+ and Chromebooks (Chrome OS 71+)</strong> only — not iPhones/iPads or Windows/Mac.',
+    'Install the <strong>Family Link</strong> app (yours) and sign a <strong>supervised child Google Account</strong> (true birthdate) into the device. Full supervision works on <strong>Android 7+ and Chromebooks (Chrome OS 71+)</strong> only — not iPhones/iPads or Windows/Mac.',
     '<strong>Require approval for every app install</strong> (Play downloads and purchases); set daily <em>and</em> per-app time limits, <strong>Downtime/bedtime</strong>, and a <strong>School Time</strong> schedule.',
     'Enforce <strong>SafeSearch</strong> and manage <strong>Chrome site filtering</strong> — “only approved sites” (allowlist) for grade 4, then block mature/specific sites from grade 5–6 — plus the <strong>YouTube supervised experience</strong> (Explore → Explore More → Most of YouTube) and <strong>approved contacts</strong> for calls/texts.',
     '<strong>Removal reality:</strong> under 13 the child can’t leave supervision; at 13 the account is offered the choice; 13–17 need your approval (a parent access code) to switch it off. A VPN can still slip local filters, so lock app installs and remove VPN apps — the network layer is your backstop.',
@@ -235,7 +235,7 @@ export default [
         <li><strong>Filters barely work as a shield — but that’s not why you deploy them.</strong>
           The best study available found parental filtering explains <strong>less than 0.5% of the
           variance</strong> in whether a teen encounters sexual material; a preregistered replication
-          found no protective effect at all${h.cite({ text: 'Przybylski &amp; Nash, “Internet Filtering and Adolescent Exposure to Online Sexual Material,” <em>Cyberpsychology, Behavior &amp; Social Networking</em> (2018)', url: 'https://www.oii.ox.ac.uk/parental-controls-ineffective-at-preventing-teens-from-seeing-pornography-new-research-finds/' })}. Filters still earn their keep
+          found no practically significant protective effect${h.cite({ text: 'Przybylski &amp; Nash, “Internet Filtering and Adolescent Exposure to Online Sexual Material,” <em>Cyberpsychology, Behavior &amp; Social Networking</em> (2018)', url: 'https://www.oii.ox.ac.uk/parental-controls-ineffective-at-preventing-teens-from-seeing-pornography-new-research-finds/' })}. Filters still earn their keep
           in elementary school: they cut <em>accidental</em> exposure (the majority of first
           exposures), buy you years to teach, and signal family norms. Deploy them; never mistake them
           for the strategy.</li>
@@ -291,7 +291,7 @@ export default [
         online spaces versus just 9% in person</strong>${h.cite({ text: 'Hopelab &amp; Born This Way Foundation, “‘Without It, I Wouldn’t Be Here Today’” (2025)', url: 'https://www.prnewswire.com/news-releases/new-research-from-hopelab-and-born-this-way-foundation-reveals-online-spaces-provide-a-lifeline-to-lgbtq-young-people-302398923.html' })},
         and <strong>68% reach LGBTQ-affirming spaces online</strong> — often more than they can at home or
         school${h.cite({ text: 'The Trevor Project, “2024 U.S. National Survey on the Mental Health of LGBTQ+ Young People” (2024)', url: 'https://www.thetrevorproject.org/survey-2024/' })}.
-        They also know it’s fragile: <strong>76% worry that platform or government restrictions will cut that
+        They also know it’s fragile: <strong>76% worry that government restrictions will cut that
         content off</strong>${h.cite({ text: 'Hopelab &amp; Born This Way Foundation, “‘Without It, I Wouldn’t Be Here Today’” (2025)', url: 'https://www.prnewswire.com/news-releases/new-research-from-hopelab-and-born-this-way-foundation-reveals-online-spaces-provide-a-lifeline-to-lgbtq-young-people-302398923.html' })}.
         A blunt ban doesn’t read as protection here — it reads as losing the one room where they can breathe.</p>
       <p>That lifeline sits beside a heavier threat load. LGBTQ+ minors are <strong>2–3× more likely to face
@@ -544,7 +544,7 @@ export default [
       <div class="sources">
         <h2>Sources</h2>
         <p><strong>Efficacy &amp; frameworks:</strong> Przybylski &amp; Nash, <em>J. Pediatrics</em> 2017
-          &amp; <em>Cyberpsychology</em> 2018 (filtering ineffectiveness, preregistered) · Chen &amp;
+          &amp; <em>Cyberpsychology</em> 2018 (filtering ineffectiveness; the 2018 study is the preregistered replication) · Chen &amp;
           Shi, <em>JMCQ</em> 2019 (52-study meta-analysis) · Livingstone et al. 2017 · EU Kids Online
           2020 · Geurts et al., <em>JMIR</em> 2025 (rules × age inflection) · Ghosh/Wisniewski CHI 2018 ·
           APA Health Advisory 2023 · AAP 5 Cs + Family Media Plan · eSafety Commissioner · UNICEF Dec
