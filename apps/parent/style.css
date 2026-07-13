@@ -197,6 +197,25 @@ form.config button:hover { filter: brightness(1.08); }
 /* footer caption ---------------------------------------------------------- */
 .foot { font-family: var(--mono); font-size: 11px; color: var(--faint); text-align: center; margin: 40px 0 0; letter-spacing: 0.04em; }
 
+/* site footer (privacy + attribution) ------------------------------------- */
+.site-footer { margin-top: 64px; padding-top: 26px; border-top: 1px solid var(--hairline); text-align: center; }
+.site-footer .footer-note { font-family: var(--mono); font-size: 11px; color: var(--faint); text-align: center; margin: 0 0 9px; letter-spacing: 0.04em; }
+.site-footer .footer-links { font-family: var(--mono); font-size: 12px; color: var(--muted); margin: 0; }
+.site-footer .footer-links a { color: var(--muted); }
+.site-footer .footer-links a:hover { color: var(--accent); }
+.site-footer .dot-sep { margin: 0 9px; color: var(--faint); }
+
+/* privacy / legal page ---------------------------------------------------- */
+.legal .updated { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); margin: 0 0 26px; }
+.legal h2 { font-size: 22px; margin-top: 42px; padding-bottom: 12px; }
+.legal p, .legal li { color: var(--text-body); font-size: 16px; line-height: 1.65; }
+.legal ul { margin: 0.7em 0; padding-left: 1.25em; }
+.legal li { margin: 0.5em 0; padding-left: 4px; }
+.legal li strong { color: var(--text); }
+.legal a { text-decoration: underline; text-underline-offset: 2px; }
+.legal code { font-family: var(--mono); font-size: 0.85em; background: var(--tint); padding: 1px 5px; border-radius: 5px; }
+.legal .site-footer a { text-decoration: none; }
+
 /* ===== RESEARCH page ===================================================== */
 .toc { display: flex; flex-wrap: wrap; gap: 8px 10px; padding: 0; margin: 22px 0 0; list-style: none; }
 .toc a {

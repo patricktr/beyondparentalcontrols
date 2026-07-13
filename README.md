@@ -105,11 +105,17 @@ Push to `main` and both sites deploy automatically (Vercel Git integration).
 
 ## Privacy
 
-No accounts, no database, no cookies, `noindex`; everything renders in the browser and the config you
+No accounts, no database, no cookies; everything renders in the browser and the config you
 enter never leaves your device. The **parent** site keeps only lightweight, anonymous analytics
 (pageviews, browser, coarse geo via PostHog) — the URL query string is stripped so names and choices are
-never sent, autocapture is off, persistence is cookieless, and IP is discarded server-side. The **kid**
-site is untracked. Matches the original project's family-privacy stance.
+never sent, autocapture is off, persistence is cookieless, and IP is discarded server-side (PostHog
+`anonymize_ips`, verified on the project). The **kid** site is untracked. Matches the original project's
+family-privacy stance. Full policy lives at [`/privacy`](apps/parent/privacy/index.html) and is linked
+from every parent-site footer.
+
+The parent content pages (landing, plan, research, privacy) are **indexable** — a permissive
+[`robots.txt`](apps/parent/robots.txt) + [`sitemap.xml`](apps/parent/sitemap.xml) ship with the parent app.
+The **kid** site keeps its `noindex` meta tag (it's a personalized artifact, not a page to surface in search).
 
 ## Status
 

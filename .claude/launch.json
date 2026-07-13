@@ -3,15 +3,15 @@
   "configurations": [
     {
       "name": "parent",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8791", "--bind", "127.0.0.1", "--directory", "apps/parent"],
-      "port": 8791
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "exec python3 -m http.server ${PORT:-0} --bind 127.0.0.1 --directory apps/parent"],
+      "autoPort": true
     },
     {
       "name": "kid",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8792", "--bind", "127.0.0.1", "--directory", "apps/kid"],
-      "port": 8792
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "exec python3 -m http.server ${PORT:-0} --bind 127.0.0.1 --directory apps/kid"],
+      "autoPort": true
     }
   ]
 }

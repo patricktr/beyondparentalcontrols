@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy · Beyond Parental Controls</title>
+<meta name="description" content="What this site collects (almost nothing), what it never collects, and why. No accounts, no cookies, no tracking of your child.">
+<link rel="stylesheet" href="/style.css">
+<script src="/analytics.js"></script>
+</head>
+<body>
+<header class="masthead"><div class="masthead-inner"><a class="wordmark" href="/">Beyond Parental Controls</a><div class="masthead-right"><a class="nav-link" href="/">← back to the plan</a></div></div></header>
+
+<div class="page legal">
+  <p class="eyebrow accent">Privacy</p>
+  <h1>What we collect — and what we don't.</h1>
+  <p class="updated">Last updated 12 July 2026</p>
+
+  <p class="lede">This site is built to need almost nothing from you. No accounts, no cookies, and no
+    tracking of your child. The only thing we measure is a lightweight, anonymous count of which pages get
+    viewed — and even that is stripped of anything that could identify you or your kid. Here's exactly what
+    that means, in plain language.</p>
+
+  <div class="privacy">
+    <strong>🔒 The short version.</strong> Your plan is built entirely in your browser. The name, age, and
+    choices you enter never leave your device unless you copy a link and share it yourself. We keep only
+    anonymous pageview analytics — rough location and browser, no cookies, no IP stored, and nothing that
+    identifies you or your kid. The separate kid site collects <em>nothing at all</em>.
+  </div>
+
+  <h2>What we collect</h2>
+  <p>On the parent site (<strong>beyondparentalcontrols.com</strong>) we use
+    <a href="https://posthog.com/privacy" target="_blank" rel="nofollow noopener">PostHog</a>, a
+    privacy-focused analytics tool, to record anonymous pageviews. For a given visit that means:</p>
+  <ul>
+    <li><strong>The page you looked at</strong> — the path only (e.g. <code>/research.html</code>), never the
+      part of the address that carries your answers (see below).</li>
+    <li><strong>An approximate location</strong> — country, region, and city — estimated from your IP address.
+      The IP itself is used only for that instant to make the estimate and is then discarded. We never store it.</li>
+    <li><strong>Basic technical details your browser sends automatically</strong> — browser name and version,
+      operating system, device type, and screen size.</li>
+    <li><strong>The site that referred you</strong>, if any — with its query string removed.</li>
+  </ul>
+  <p>That is the whole list. It's collected in aggregate to answer one question: which parts of this site are
+    useful. It is never used to build a profile of you.</p>
+
+  <h2>What we deliberately don't collect</h2>
+  <ul>
+    <li><strong>Your child's name, age, identity, devices, or any answer you type.</strong> The plan is
+      generated in your browser, and your selections live only in the page's web address. We remove the query
+      string — the part after the “?”, where the name and every choice live — before any analytics event is
+      sent, so those details are never transmitted to us. The page title, which can contain your child's name,
+      is dropped for the same reason.</li>
+    <li><strong>No cookies and no local storage.</strong> Analytics runs “cookieless,” so nothing is saved to
+      your device and you are not linked from one visit to the next.</li>
+    <li><strong>No stored IP addresses.</strong> Used for a moment to estimate location, then discarded —
+      never written down.</li>
+    <li><strong>No clicks, keystrokes, or form inputs.</strong> Automatic event capture is switched off, so
+      what you type into the configurator — including your child's name — is never seen by our analytics.</li>
+    <li><strong>No accounts, logins, or email addresses.</strong> There is nothing to sign up for.</li>
+    <li><strong>No session recordings, heatmaps, or surveys.</strong></li>
+    <li><strong>No advertising trackers, no data brokers, and no selling or renting of data. Ever.</strong></li>
+  </ul>
+
+  <h2>The kid site collects nothing</h2>
+  <p>The kid-facing roadmap (<strong>yourinternetroadmap.com</strong>) loads no analytics whatsoever — no
+    PostHog, no cookies, nothing. It is deliberately a separate site that measures nothing, so a child reading
+    their own roadmap is not tracked in any way.</p>
+
+  <h2>“Do Not Track” is honored</h2>
+  <p>If your browser sends a Do Not Track signal, we capture nothing at all — no pageview, no location, nothing.</p>
+
+  <h2>Who processes this data</h2>
+  <ul>
+    <li><strong>PostHog</strong> — our analytics provider. Anonymous pageview data is processed and stored on
+      PostHog's US cloud, and the project is configured to discard IP addresses at the point of collection.
+      See <a href="https://posthog.com/privacy" target="_blank" rel="nofollow noopener">PostHog's privacy policy</a>.</li>
+    <li><strong>Vercel</strong> — hosts the site's static files. As with any web host, Vercel's infrastructure
+      handles standard server request logs to deliver pages and protect against abuse. See
+      <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="nofollow noopener">Vercel's privacy policy</a>.</li>
+  </ul>
+  <p>We don't share your data with anyone beyond these providers, who act on our behalf to run the site.</p>
+
+  <h2>Children's privacy</h2>
+  <p>This site is written for parents, and it is designed specifically to avoid collecting information about
+    children. The details you enter about your kid stay in your browser and never leave your device except
+    inside a link that you choose to copy and share. We do not knowingly collect personal information from
+    children.</p>
+
+  <h2>Your choices</h2>
+  <p>Because there are no accounts and nothing that identifies you, there is no personal profile to access,
+    correct, or delete — the analytics is anonymous and aggregate by design. If you would still rather send
+    nothing, turn on Do Not Track, or block the analytics domain (<code>us.i.posthog.com</code>) with any
+    ad- or tracker-blocker. The site works exactly the same either way.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>If we ever change what we collect, we'll update this page and the date at the top.</p>
+
+  <h2>Questions?</h2>
+  <!-- TODO(privacy contact): add a dedicated privacy email here if you want one, e.g. privacy@beyondparentalcontrols.com -->
+  <p>This is a project by <a href="https://www.untitledrepo.com" target="_blank" rel="noopener">Untitled Repo</a>.
+    You can reach us through <a href="https://www.untitledrepo.com" target="_blank" rel="noopener">untitledrepo.com</a>.</p>
+
+  <footer class="site-footer">
+    <p class="footer-note">No account · No cookies · Anonymous analytics · Renders in your browser</p>
+    <p class="footer-links"><a href="/privacy">Privacy</a><span class="dot-sep">·</span><a href="https://www.untitledrepo.com" target="_blank" rel="noopener">An Untitled Repo Project</a></p>
+  </footer>
+</div>
+</body>
+</html>
