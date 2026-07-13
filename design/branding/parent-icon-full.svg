@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Beyond Parental Controls">
+  <rect width="512" height="512" fill="#14596b"/>
+  <g transform="translate(256 256) scale(0.82) translate(-256 -256)">
+    <path d="M128 384 L256 256 L384 128" fill="none" stroke="#f2ecdd" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="128" cy="384" r="37" fill="#f2ecdd"/>
+    <circle cx="256" cy="256" r="41" fill="#f2ecdd"/>
+    <circle cx="384" cy="128" r="48" fill="#14596b" stroke="#74cad8" stroke-width="30"/>
+  </g>
+</svg>

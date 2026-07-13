@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: "Baloo 2"; font-weight: 700; font-style: normal;
+    src: url("../../apps/kid/fonts/baloo-2-700-normal-latin.woff2") format("woff2"); }
+  @font-face { font-family: "Baloo 2"; font-weight: 800; font-style: normal;
+    src: url("../../apps/kid/fonts/baloo-2-800-normal-latin.woff2") format("woff2"); }
+  @font-face { font-family: "Nunito"; font-weight: 600; font-style: normal;
+    src: url("../../apps/kid/fonts/nunito-600-normal-latin.woff2") format("woff2"); }
+  @font-face { font-family: "Nunito"; font-weight: 700; font-style: normal;
+    src: url("../../apps/kid/fonts/nunito-700-normal-latin.woff2") format("woff2"); }
+  @font-face { font-family: "Nunito"; font-weight: 800; font-style: normal;
+    src: url("../../apps/kid/fonts/nunito-800-normal-latin.woff2") format("woff2"); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f3faf4; --card: #ffffff; --ink: #123a24; --text: #3a473f; --muted: #4e6157;
+    --green: #1f8a4c; --green-dark: #146336; --green-border: #bfe6cd;
+    --amber: #f0a83c; --amber-dark: #c47f1f; --teal: #127a8a;
+    --head: "Baloo 2", system-ui, sans-serif; --body: "Nunito", sans-serif;
+  }
+  body {
+    width: 1200px; height: 630px; background: var(--bg); color: var(--text);
+    font-family: var(--body); position: relative; overflow: hidden; -webkit-font-smoothing: antialiased;
+  }
+  body::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 90% 8%, rgba(240,168,60,0.16), transparent 40%),
+      radial-gradient(circle at 4% 100%, rgba(31,138,76,0.12), transparent 42%);
+  }
+  .frame { position: absolute; inset: 24px; border: 3px solid var(--green-border); border-radius: 30px; }
+  .pad { position: absolute; inset: 24px; padding: 60px 72px; display: flex; flex-direction: column; }
+
+  .brand { display: flex; align-items: center; gap: 16px; }
+  .brand .logo { display: flex; align-items: center; gap: 16px; }
+  .brand .mark { width: 56px; height: 56px; border-radius: 15px; }
+  .brand .name { font-family: var(--head); font-weight: 700; font-size: 26px; color: var(--green-dark); }
+  .brand { justify-content: space-between; }
+
+  h1 {
+    font-family: var(--head); font-weight: 800; font-size: 84px; line-height: 1.0;
+    color: var(--green); margin-top: 46px; letter-spacing: -0.01em;
+  }
+  h1 .sun { color: var(--amber-dark); }
+  .sub {
+    font-weight: 700; font-size: 29px; line-height: 1.4; color: var(--muted);
+    margin-top: 22px; max-width: 760px;
+  }
+
+  .quest { margin-top: auto; position: relative; height: 116px; }
+  .track {
+    position: absolute; left: 20px; right: 20px; top: 34px; height: 8px; border-radius: 999px;
+    background: repeating-linear-gradient(90deg, var(--green) 0 18px, transparent 18px 34px);
+    -webkit-mask: linear-gradient(90deg, #000 62%, transparent);
+    mask: linear-gradient(90deg, #000 62%, transparent);
+  }
+  .track.gold {
+    background: repeating-linear-gradient(90deg, var(--amber) 0 18px, transparent 18px 34px);
+    left: auto; right: 20px; width: 42%;
+    -webkit-mask: linear-gradient(90deg, transparent, #000 40%);
+    mask: linear-gradient(90deg, transparent, #000 40%);
+  }
+  .stops { position: absolute; inset: 0; display: flex; justify-content: space-between; align-items: flex-start; }
+  .stop { display: flex; flex-direction: column; align-items: center; width: 150px; }
+  .stop .pin {
+    width: 30px; height: 30px; border-radius: 50%; background: var(--card);
+    border: 6px solid var(--green); margin-top: 20px; position: relative; z-index: 2;
+  }
+  .stop.now .pin { border-color: var(--green); background: var(--green); box-shadow: 0 0 0 6px rgba(31,138,76,0.18); }
+  .stop.goal .pin {
+    border: 0; background: none; width: auto; height: auto; margin-top: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .stop .label { font-family: var(--head); font-weight: 700; font-size: 18px; color: var(--ink); margin-top: 12px; }
+  .stop .age { font-weight: 700; font-size: 14px; color: var(--muted); margin-top: 1px; }
+  .stop.now .label { color: var(--green-dark); }
+  .stop.goal .label { color: var(--amber-dark); }
+
+  .domain {
+    font-family: var(--head); font-weight: 700;
+    font-size: 17px; color: var(--green); background: #fff; border: 2px solid var(--green-border);
+    border-radius: 999px; padding: 8px 18px;
+  }
+</style>
+</head>
+<body>
+  <div class="frame"></div>
+  <div class="pad">
+    <div class="brand">
+      <span class="logo">
+        <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+          <rect width="512" height="512" rx="115" fill="#1f8a4c"/>
+          <g fill="#eafbef" opacity="0.92">
+            <circle cx="368" cy="144" r="13"/><circle cx="368" cy="368" r="13"/>
+            <circle cx="144" cy="368" r="13"/><circle cx="144" cy="144" r="13"/>
+          </g>
+          <path d="M256 58 L300 212 L454 256 L300 300 L256 454 L212 300 L58 256 L212 212 Z" fill="#f2a93c"/>
+          <circle cx="256" cy="256" r="30" fill="#fbf7ec"/>
+        </svg>
+        <span class="name">Your Internet Roadmap</span>
+      </span>
+      <span class="domain">yourinternetroadmap.com</span>
+    </div>
+
+    <h1>Your quest to<br>go solo online <span class="sun">☀</span></h1>
+    <p class="sub">A friendly map from your very first device to running the whole internet yourself — leveling up one new power at a time.</p>
+
+    <div class="quest">
+      <div class="track"></div>
+      <div class="track gold"></div>
+      <div class="stops">
+        <div class="stop now"><span class="pin"></span><span class="label">Start</span><span class="age">You are here</span></div>
+        <div class="stop"><span class="pin"></span><span class="label">New powers</span><span class="age">along the way</span></div>
+        <div class="stop"><span class="pin"></span><span class="label">Big unlocks</span><span class="age">step by step</span></div>
+        <div class="stop goal">
+          <span class="pin">
+            <svg width="44" height="44" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+              <path d="M24 3 L30 18 L46 20 L34 31 L37 47 L24 39 L11 47 L14 31 L2 20 L18 18 Z" fill="#f0a83c" stroke="#c47f1f" stroke-width="1.5"/>
+            </svg>
+          </span>
+          <span class="label">Full solo</span><span class="age">the goal!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

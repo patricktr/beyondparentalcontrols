@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  @font-face { font-family: "Newsreader"; font-weight: 500; font-style: normal;
+    src: url("../../apps/parent/fonts/newsreader-500-normal-latin.woff2") format("woff2"); }
+  @font-face { font-family: "Newsreader"; font-weight: 500; font-style: italic;
+    src: url("../../apps/parent/fonts/newsreader-500-italic-latin.woff2") format("woff2"); }
+  @font-face { font-family: "Newsreader"; font-weight: 600; font-style: normal;
+    src: url("../../apps/parent/fonts/newsreader-600-normal-latin.woff2") format("woff2"); }
+  @font-face { font-family: "Public Sans"; font-weight: 500; font-style: normal;
+    src: url("../../apps/parent/fonts/public-sans-500-normal-latin.woff2") format("woff2"); }
+  @font-face { font-family: "IBM Plex Mono"; font-weight: 500; font-style: normal;
+    src: url("../../apps/parent/fonts/ibm-plex-mono-500-normal-latin.woff2") format("woff2"); }
+  @font-face { font-family: "IBM Plex Mono"; font-weight: 600; font-style: normal;
+    src: url("../../apps/parent/fonts/ibm-plex-mono-600-normal-latin.woff2") format("woff2"); }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f7f5ef; --card: #fdfcf8; --text: #22252a; --muted: #565b62;
+    --faint: #9a9488; --accent: #14596b; --accent-2: #0e7c86; --rule: #e0dccf;
+    --rail: #ddd8ca; --node-future: #c8c2b2;
+    --serif: "Newsreader", Georgia, serif; --sans: "Public Sans", sans-serif; --mono: "IBM Plex Mono", monospace;
+  }
+  body {
+    width: 1200px; height: 630px; background: var(--bg); color: var(--text);
+    font-family: var(--sans); position: relative; overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* faint editorial paper grain via layered radial dots */
+  body::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 88% 12%, rgba(20,89,107,0.05), transparent 42%),
+      radial-gradient(circle at 6% 96%, rgba(14,124,134,0.045), transparent 46%);
+  }
+  .frame { position: absolute; inset: 26px; border: 1.5px solid var(--rule); border-radius: 22px; }
+
+  .pad { position: absolute; inset: 26px; padding: 62px 74px; display: flex; flex-direction: column; }
+
+  .top { display: flex; align-items: center; justify-content: space-between; }
+  .brand { display: flex; align-items: center; gap: 16px; }
+  .brand .mark { width: 46px; height: 46px; border-radius: 12px; }
+  .brand .name { font-family: var(--serif); font-weight: 600; font-size: 24px; letter-spacing: -0.01em; }
+  .domain { font-family: var(--mono); font-size: 15px; color: var(--accent); letter-spacing: 0.02em; }
+
+  .eyebrow {
+    font-family: var(--mono); font-weight: 600; font-size: 16.5px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--accent); margin-top: 54px;
+  }
+  h1 {
+    font-family: var(--serif); font-weight: 500; font-size: 56px; line-height: 1.08;
+    letter-spacing: -0.02em; margin-top: 20px; max-width: 1010px; color: var(--text);
+  }
+  h1 em { color: var(--accent); font-style: italic; }
+
+  .rail { margin-top: auto; display: flex; align-items: flex-end; gap: 0; position: relative; }
+  .rail::before {
+    content: ""; position: absolute; left: 18px; right: 18px; top: 15px; height: 2px; background: var(--rail);
+  }
+  .stop { position: relative; flex: 1; display: flex; flex-direction: column; align-items: flex-start; }
+  .stop .dot {
+    width: 15px; height: 15px; border-radius: 50%; background: var(--node-future);
+    border: 3px solid var(--bg); position: relative; z-index: 2; margin-left: 11px;
+  }
+  .stop.here .dot { width: 21px; height: 21px; background: var(--accent); margin-left: 8px; margin-top: -3px; }
+  .stop.end .dot { width: 21px; height: 21px; background: var(--bg); border: 3px solid var(--accent); margin-left: 8px; margin-top: -3px; }
+  .stop .age { font-family: var(--mono); font-size: 17px; color: var(--faint); margin-top: 14px; }
+  .stop.here .age { color: var(--accent); font-weight: 600; }
+  .stop.end .age { color: var(--text); font-weight: 600; }
+  .stop .cap { font-family: var(--serif); font-size: 16px; color: var(--muted); margin-top: 3px; max-width: 190px; }
+  .stop.here .cap, .stop.end .cap { color: var(--text); }
+  .here-pill {
+    font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase;
+    color: #fff; background: var(--accent); border-radius: 999px; padding: 3px 9px;
+    position: absolute; top: -26px; left: 4px;
+  }
+
+  .foot {
+    margin-top: 30px; padding-top: 22px; border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--mono); font-size: 14px; color: var(--faint); letter-spacing: 0.03em;
+  }
+  .foot .lede-tag { color: var(--muted); }
+</style>
+</head>
+<body>
+  <div class="frame"></div>
+  <div class="pad">
+    <div class="top">
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+          <rect width="512" height="512" rx="115" fill="#14596b"/>
+          <path d="M128 384 L256 256 L384 128" fill="none" stroke="#f2ecdd" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="128" cy="384" r="37" fill="#f2ecdd"/>
+          <circle cx="256" cy="256" r="41" fill="#f2ecdd"/>
+          <circle cx="384" cy="128" r="48" fill="#14596b" stroke="#74cad8" stroke-width="30"/>
+        </svg>
+        <span class="name">Beyond Parental Controls</span>
+      </div>
+      <span class="domain">beyondparentalcontrols.com</span>
+    </div>
+
+    <p class="eyebrow">A staged plan · locked-down now → autonomy by 18</p>
+    <h1>Hand over the internet <em>on purpose</em> — not by attrition.</h1>
+
+    <div class="rail">
+      <div class="stop here">
+        <span class="here-pill">You are here</span>
+        <span class="dot"></span><span class="age">Age 9</span><span class="cap">Finding your balance, together</span>
+      </div>
+      <div class="stop">
+        <span class="dot"></span><span class="age">13</span><span class="cap">First accounts</span>
+      </div>
+      <div class="stop">
+        <span class="dot"></span><span class="age">15</span><span class="cap">We mostly step back</span>
+      </div>
+      <div class="stop end">
+        <span class="dot"></span><span class="age">18</span><span class="cap">The handoff · full autonomy</span>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span class="lede-tag">Filters buy time. Skills buy autonomy.</span>
+      <span>No account · No cookies</span>
+    </div>
+  </div>
+</body>
+</html>
